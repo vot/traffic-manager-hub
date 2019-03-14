@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <title>Traffic Manager HQ</title>
+  <link href="/public/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="/public/css/app.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <ul class="nav navbar-nav">
+        <li><a class="navbar-brand" href="/">TrafficManager</a></li>
+        <li class="separator"></li>
+        <li><a href="/api">API</a></li>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/login">Login</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- <br /><br /><br /> -->
+
+  <div class="{{#if isHomepage}}hero-gradient{{else}}container{{/if}}">
+    {{{body}}}
+  </div>
+
+</body>
+</html>

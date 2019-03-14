@@ -1,0 +1,65 @@
+{
+  "extends": ["airbnb-base"],
+  "env": {
+    "es6": false,
+    "node": true
+  },
+  "rules": {
+    "no-plusplus": "warn",
+    "no-shadow": "warn",
+    "no-lonely-if": "warn",
+    "import/newline-after-import": "warn",
+    "global-require": "warn",
+    "comma-dangle": "off",
+    "max-len": [
+      "error",
+      {
+        "code": 150,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreComments": true
+      }
+    ],
+    "no-param-reassign": "warn",
+    "no-else-return": "warn",
+    "no-loop-func": "warn",
+    "object-curly-spacing": "off",
+    "padded-blocks": "off",
+    "no-console": "off",
+    "prefer-const": "warn",
+    "prefer-template": "off",
+    "prefer-destructuring": "off",
+    "no-const-assign": "warn",
+    "vars-on-top": "off",
+    "yoda": "warn",
+    "func-names": "off",
+    "spaced-comment": "warn",
+    "camelcase": "warn",
+    "object-shorthand": "off",
+    "import/no-dynamic-require": "warn",
+    "import/no-extraneous-dependencies": "warn",
+    "no-bitwise": "error",
+    "curly": "error",
+    "eqeqeq": "warn",
+    "indent": 2,
+    "no-caller": "error",
+    "quotes": ["warn", "single"],
+    "no-undef": "error",
+    "no-throw-literal": "warn",
+    "import/no-unresolved": "warn",
+    "one-var": "warn",
+    "prefer-rest-params": "warn",
+    "no-nested-ternary": "warn",
+    "no-prototype-builtins": "warn",
+    "no-new": "warn",
+    "arrow-body-style": "off",
+    "strict": "off"
+  },
+  "overrides": [{
+    "files": ["**/*.spec.js"],
+    "globals": {
+      "describe": true,
+      "it": true
+    }
+  }]
+}

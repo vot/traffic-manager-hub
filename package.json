@@ -1,0 +1,34 @@
+{
+  "name": "@cambridgecore/traffic-manager-hq",
+  "version": "0.0.1",
+  "description": "Web service for aggregation and analysis of your web app traffic.",
+  "keywords": [],
+  "main": "index.js",
+  "author": "Cambridge University Press",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.aop.cambridge.org/aop-cms/traffic-manager-hq.git"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "test": "mocha **/*.spec.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "geoip-lite": "^1.3.6",
+    "hbs": "^4.0.3",
+    "lodash": "^4.17.11",
+    "mongodb": "^3.1.13"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "5.15.1",
+    "eslint-config-airbnb-base": "13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^6.0.2",
+    "mocha-lcov-reporter": "^1.3.0"
+  }
+}
