@@ -8,6 +8,9 @@ const path = require('path');
 
 const config = require('./config');
 const analyser = require('./lib/analyser');
+const getSummaryByCriteria = require('./lib/getSummaryByCriteria');
+
+const samplesModel = require('./models/mongo').samples;
 
 const jsonParser = bodyParser.json();
 
@@ -27,9 +30,16 @@ function startApp() {
   app.use('/public', express.static('public'));
 
   app.get('/', (req, res) => {
-    // todo get data here
-    const summaryByIp = {};
-    return res.render('home', {isHomepage: true, data: {byIp: summaryByIp}});
+    // timestamp greater than 1 min ago
+    const query = {};
+
+    samplesModel.find(query, (err, data) => {
+      const summaryByIp = getSummaryByCriteria(data, 'ip', {limit: 50});
+      const summaryBySessionId = getSummaryByCriteria(data, 'sessionId', {limit: 50});
+      const summaryBySessionUA = getSummaryByCriteria(data, 'userAgent', {limit: 50});
+
+      return res.render('home', {isHomepage: true, data: {summaryByIp, summaryBySessionId, summaryBySessionUA}});
+    });
   });
 
   app.get('/api', (req, res) => {
@@ -42,6 +52,15 @@ function startApp() {
     return res.render('dashboard');
   });
 
+  app.get('/request-log', (req, res) => {
+    // timestamp greater than 1 min ago
+    const query = {};
+
+    samplesModel.find(query, (err, data) => {
+      return res.render('request-log', {data});
+    });
+  });
+
   app.get('/login', (req, res) => {
     // todo write this logic
     return res.render('login');
@@ -49,24 +68,10 @@ function startApp() {
 
   app.use('/api', jsonParser);
 
-  app.post('/api/v1/site/:siteId/submitSamples', (req, res) => {
-    const samples = _.get(req, 'body.samples');
-    const siteAuthId = req.params.siteId;
-    const siteAuthSecret = _.get(req, 'body.authSecret');
-
-    // validate secret here
-
-    console.log('Samples submitted');
-
-    const processed = analyser.analyseSamples(samples, { siteId: siteAuthId });
-    console.log(processed);
-
-    // store samples
-    return res.json({status: 'ok'});
-  });
+  app.post('/api/v1/site/:siteId/submitSamples', require('./routes/api/v1/site/submitSamples.post.js'));
 
 
-  app.get('/api/v1/site/:siteId/count/ip?timeStart', (req, res) => {
+  app.get('/api/v1/site/:siteId/count/ip', (req, res) => {
     return res.json({status: 'ok', data: []});
   });
 

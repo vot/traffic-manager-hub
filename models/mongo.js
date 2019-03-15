@@ -7,6 +7,7 @@ const MongoClient = require('mongodb').MongoClient;
 const config = require('../config');
 
 const mongoUrl = config.mongoUrl;
+const mongoDbName = config.mongoDbName;
 
 /**
  * Creates a Mongo connection
@@ -14,8 +15,8 @@ const mongoUrl = config.mongoUrl;
  * @param {function} callback Signature: (err, db)
  */
 function _getClient(callback) {
-  MongoClient.connect(mongoUrl, (err, db) => {
-    if (err || !db) {
+  MongoClient.connect(mongoUrl, (err, client) => {
+    if (err || !client) {
       console.log(`Couldn't connect to Mongo at ${mongoUrl}`);
       if (err) {
         console.error(err);
@@ -23,7 +24,10 @@ function _getClient(callback) {
       return callback(err);
     }
 
-    // console.log('Connected correctly to server');
+    const db = client.db(mongoDbName);
+    db.close = client.close;
+
+    console.log('Connected correctly to server');
     return callback(null, db);
   });
 }
@@ -44,6 +48,22 @@ function Model(collectionName) {
 
   const rtnModelObject = {
     _type: 'mongo',
+    insertMany: function insertMany(data, callback) {
+      _getClient((error, db) => {
+        if (error) {
+          console.log(error);
+          return callback(error);
+        }
+        const col = db.collection(collectionName);
+
+        col.insertMany(data, { multi: true }, (err, r) => {
+          // console.log(r.upsertedId._id);
+          db.close();
+          return callback(err, r);
+        });
+      });
+    },
+
     upsert: function upsert(data, callback) {
       _getClient((error, db) => {
         if (error) {
@@ -99,9 +119,9 @@ function Model(collectionName) {
 
 
 const sitesModel = new Model('sites');
-const requestsModel = new Model('requests');
+const samplesModel = new Model('samples');
 
 module.exports = {
   sites: sitesModel,
-  requests: requestsModel
+  samples: samplesModel
 };

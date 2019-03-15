@@ -1,6 +1,30 @@
-<h1>TrafficManager HQ</h1>
+<h1>Last 15 minutes</h1>
 
-<h2>Raw data</h2>
-<pre>
-{{json data}}
-</pre>
+<div class="row-fluid">
+  <div class="col-sm-4">
+    <h2>Top IPs</h2>
+    <ul>
+    {{#each data.summaryByIp}}
+      <li>{{this.length}} requests: {{@key}}</li>
+    {{/each}}
+    </ul>
+  </div>
+
+  <div class="col-sm-4">
+    <h2>Top sessions</h2>
+    <ul>
+    {{#each data.summaryBySessionId}}
+      <li>{{this.length}} requests: {{@key}}</li>
+    {{/each}}
+    </ul>
+  </div>
+
+  <div class="col-sm-4">
+    <h2>Top User Agents</h2>
+    <ul>
+    {{#each data.summaryBySessionUA}}
+      <li>{{this.length}} requests: {{@key}}</li>
+    {{/each}}
+    </ul>
+  </div>
+</div>
