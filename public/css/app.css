@@ -1,7 +1,7 @@
-h1, .jumbotron h1 {font-size: 34px}
-h2 { font-size: 26px; font-weight: 200; margin-bottom: 25px}
-.hero-gradient {background: linear-gradient(#ddd,#eee,#fff,#fff); margin: -10px 0 0; padding: 50px 0 30px;}
-.hero-gradient .jumbotron {background: none; padding: 0; margin: 0;}
+.tm-wrapper {padding: 20px 0;}
+
+.tm-wrapper.bg-gradient {background: linear-gradient(#ddd,#eee,#fff,#fff); margin: 0}
+.tm-wrapper.bg-gradient .jumbotron {background: none; padding: 0; margin: 0;}
 
 ul.stats {padding: 0; margin: 0; list-style: none; font-family: monospace;}
 ul.stats li {line-height: 26px; padding: 0 0 2px; margin: 0; list-style: none}
@@ -18,3 +18,35 @@ body {padding-top: 50px;}
   .navbar-brand {float: none}
   .navbar .separator {display: none}
 }
+
+
+.tm-statistic {
+  text-align: left; background: #f5f5f5; padding: 0 30px; margin: 20px 0;
+  border: 2px solid transparent; border-radius: 3px;
+}
+
+.tm-statistic.green {border-color: #8fd68f}
+.tm-statistic.yellow {border-color: #d0d836}
+.tm-statistic.blue {border-color: #639fd0}
+.tm-statistic.red {border-color: #e26464}
+
+
+.tm-statistic .heading {
+  text-align: center;
+  background: #ddd;
+  margin: 0 -30px 10px;
+  padding: 10px 0;
+  font-size: 14px;
+  font-weight: 500
+}
+
+.tm-statistic .score { text-align: center; font-size: 30px; font-weight: 400}
+.tm-statistic .avg { text-align: center; font-size: 12px; font-weight: 400; }
+
+.tm-statistic .breakdown {
+  height: 150px;
+}
+
+.tm-context-selector {width: 200px; overflow: hidden;}
+
+/* .navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {width: 320px} */
