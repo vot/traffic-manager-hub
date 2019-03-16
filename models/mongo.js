@@ -15,7 +15,7 @@ const mongoDbName = config.mongoDbName;
  * @param {function} callback Signature: (err, db)
  */
 function _getClient(callback) {
-  MongoClient.connect(mongoUrl, (err, client) => {
+  MongoClient.connect(mongoUrl, { useNewUrlParser: true }, (err, client) => {
     if (err || !client) {
       console.log(`Couldn't connect to Mongo at ${mongoUrl}`);
       if (err) {
@@ -27,7 +27,7 @@ function _getClient(callback) {
     const db = client.db(mongoDbName);
     db.close = client.close;
 
-    console.log('Connected correctly to server');
+    // console.log('Connected correctly to server');
     return callback(null, db);
   });
 }
