@@ -1,1 +1,27 @@
 <h1>API</h1>
+
+<p>If your application ID is <code>5c8ae4e7d3afe8a6ddfe7e33</code> you should
+  send a <code>POST</code> request to
+  <code>https://trafficmanager.example.com/api/v1/5c8ae4e7d3afe8a6ddfe7e33/submitSamples</code>:</p>
+
+You can aggregate as many messages as you'd like into the <code>samples</code> array.
+
+<pre>
+{
+	"siteSecret": "zN2EY69fmy303MUEs7ZkQv8sqeuFjFEp",
+	"samples": [
+		{
+			"ip": "89.238.154.238",
+			"url": "http://example.com/wp-login.php",
+			"userAgent": "SampleUA/1.0.0",
+			"timestamp": "1552604831677"
+		},
+		{
+			"ip": "89.238.154.238",
+			"url": "http://example.com/cpanel",
+			"userAgent": "SampleUA/1.0.0",
+			"timestamp": "1552604831681"
+		}
+	]
+}
+</pre>

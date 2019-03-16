@@ -7,7 +7,6 @@ const hbs = require('hbs');
 const path = require('path');
 
 const config = require('./config');
-const analyser = require('./lib/analyser');
 const getSummaryByCriteria = require('./lib/getSummaryByCriteria');
 
 const samplesModel = require('./models/mongo').samples;
@@ -29,7 +28,32 @@ function startApp() {
 
   app.use('/public', express.static('public'));
 
+
+  /* Routes */
+  const rootContext = {wrapperClass: 'bg-gradient'};
+  const siteContext = {site: {id: '5c8ae4e7d3afe8a6ddfe7e33', name: 'Site 1'}, wrapperClass: 'bg-gradient'};
+  const sites = [{id: '5c8ae4e7d3afe8a6ddfe7e33', name: 'Site 1'}];
+
   app.get('/', (req, res) => {
+    return res.render('home', {context: rootContext, data: {sites}});
+  });
+
+  app.get('/api', (req, res) => {
+    // todo write this logic
+    return res.render('api', {context: rootContext});
+  });
+
+  app.get('/readme', (req, res) => {
+    // todo write this logic
+    return res.render('readme', {context: rootContext});
+  });
+
+  // app.get('/login', (req, res) => {
+  //   // todo write this logic
+  //   return res.render('login');
+  // });
+
+  app.get('/site/:siteId/summary', (req, res) => {
     // timestamp greater than 1 min ago
     const query = {};
 
@@ -38,33 +62,24 @@ function startApp() {
       const summaryBySessionId = getSummaryByCriteria(data, 'sessionId', {limit: 50});
       const summaryBySessionUA = getSummaryByCriteria(data, 'userAgent', {limit: 50});
 
-      return res.render('home', {isHomepage: true, data: {summaryByIp, summaryBySessionId, summaryBySessionUA}});
+      return res.render('site/summary', {context: siteContext, data: {summaryByIp, summaryBySessionId, summaryBySessionUA}});
     });
   });
 
-  app.get('/api', (req, res) => {
-    // todo write this logic
-    return res.render('api');
-  });
 
-  app.get('/dashboard', (req, res) => {
-    // todo write this logic
-    return res.render('dashboard');
-  });
-
-  app.get('/request-log', (req, res) => {
+  app.get('/site/:siteId/log-viewer', (req, res) => {
     // timestamp greater than 1 min ago
     const query = {};
 
     samplesModel.find(query, (err, data) => {
-      return res.render('request-log', {data});
+      return res.render('site/log-viewer', {context: siteContext, data});
     });
   });
 
-  app.get('/login', (req, res) => {
-    // todo write this logic
-    return res.render('login');
+  app.get('/site/:siteId/settings', (req, res) => {
+    return res.render('site/settings', {context: siteContext});
   });
+
 
   app.use('/api', jsonParser);
 

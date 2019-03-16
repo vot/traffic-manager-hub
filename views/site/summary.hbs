@@ -1,0 +1,126 @@
+<h1>Summary: Last 15 minutes</h1>
+
+<div class="row">
+  <div class="col-sm-4">
+    <div class="tm-statistic">
+      <p class="heading">Requests</p>
+      <p class="score">45000</p>
+      <p class="avg">Frame avg: 3000/min</p>
+      <p class="avg">24h avg: 4300/min</p>
+
+      <hr />
+
+      <p>Request types</p>
+
+      <ul class="breakdown">
+        <li>330 Search</li>
+        <li>10 Download</li>
+        <li>20 Article</li>
+        <li>20 Chapter</li>
+        <li>7 Malicious</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-sm-4">
+    <div class="tm-statistic">
+      <p class="heading">Blocked requests</p>
+      <p class="score">180</p>
+      <p class="avg">Frame avg: 12/min</p>
+      <p class="avg">24h avg: 6/min</p>
+
+      <hr />
+
+      <p>Criteria</p>
+
+      <ul class="breakdown">
+        <li>30 by IP: 12.34.56.78</li>
+        <li>3 by SessionID: 3jiwe32jweiso</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-sm-4">
+    <div class="tm-statistic">
+      <p class="heading">IP Hops</p>
+      <p class="score">150</p>
+      <p class="avg">Frame avg: 10/min</p>
+      <p class="avg">24h avg: 6/min</p>
+
+      <hr />
+
+      <p>Session IDs</p>
+
+      <ul class="breakdown">
+        <li>138 on 3jiwe32jweiso</li>
+        <li>12 on 3jiwe32jweiso</li>
+      </ul>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="col-sm-4">
+    <div class="tm-statistic">
+      <p class="heading">Unique IPs</p>
+      <p class="score">45000</p>
+      <p class="avg">Frame avg: 3000/min</p>
+      <p class="avg">24h avg: 4300/min</p>
+
+      <hr />
+
+      <p>Top usage</p>
+
+      <ul class="breakdown">
+        {{#each data.summaryByIp}}
+          <li>{{this.length}} requests: {{@key}}</li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-sm-4">
+    <div class="tm-statistic">
+      <p class="heading">Unique Sessions</p>
+      <p class="score">1800</p>
+      <p class="avg">Frame avg: 120/min</p>
+      <p class="avg">24h avg: 180/min</p>
+
+      <hr />
+
+      <p>Top usage</p>
+
+      <ul class="breakdown">
+        {{#each data.summaryBySessionId}}
+          <li>{{this.length}} requests: {{@key}}</li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-sm-4">
+    <div class="tm-statistic">
+      <p class="heading">User Agents</p>
+      <p class="score">150</p>
+      <p class="avg">Frame avg: 120/min</p>
+      <p class="avg">24h avg: 180/min</p>
+
+      <hr />
+
+      <p>Top usage</p>
+
+      <ul class="breakdown">
+        {{#each data.summaryBySessionUA}}
+          <li>{{this.length}} requests: {{@key}}</li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+
+</div>

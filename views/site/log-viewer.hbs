@@ -1,0 +1,63 @@
+<h1>Log viewer</h1>
+
+<div class="row">
+  <div class="col-xs-4">
+    Frame:
+    <select>
+      <option value="last-15">Last 15 minutes</option>
+      <option value="last-30">Last 30 minutes</option>
+      <option value="last-60">Last 1 hour</option>
+      <option value="last-180">Last 3 hours</option>
+      <option value="last-360">Last 6 hours</option>
+      <option value="last-720">Last 12 hours</option>
+      <option value="last-1440">Last 24 hours</option>
+      <option value="last-2880">Last 48 hours</option>
+      <option value="last-4320">Last 72 hours</option>
+    </select>
+  </div>
+
+  <div class="col-xs-8">
+    Filters:
+    <div class="btn-group" role="group" aria-label="Filtering by IP">
+      <button type="button" class="btn btn-primary btn-xs">X</button>
+      <button type="button" class="btn btn-primary btn-xs">IP: 89.238.154.238</button>
+    </div>
+  </div>
+</div>
+
+<hr/>
+
+<p>300 requests in the last 15 minutes</p>
+
+<br />
+
+<table class="table">
+<tr>
+  <th>IP</th>
+  <th>URL</th>
+  <th>User Agent</th>
+  <th>Session ID</th>
+  <th>Timestamp</th>
+  <th>Time processing</th>
+  <th>Tags</th>
+  <th>Response size</th>
+  <th>Status</th>
+</tr>
+{{#each data}}
+<tr>
+  <td>{{this.ip}}</td>
+  <td>{{this.url}}</td>
+  <td>{{this.userAgent}}</td>
+  <td>{{this.sessionId}}</td>
+  <td>{{this.timestamp}}</td>
+  <td>{{this.timeProcessing}}</td>
+  <td>{{this.tags}}</td>
+  <td>{{this.responseSize}}</td>
+  <td>{{this.status}}</td>
+</tr>
+{{/each}}
+</table>
+
+<!-- <pre>
+{{json data}}
+</pre> -->

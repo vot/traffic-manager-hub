@@ -1,0 +1,31 @@
+<h1>About Traffic Manager</h1>
+
+<p>Allows you to monitor traffic to your application and control it.</p>
+
+<p>Captures and analises traffic in order to shape the throttling levels and
+contain suspicious or abusive traffic.</p>
+
+<p>Supports alerting and custom thresholds.</p>
+
+<h2>Integrating into Node.js applications</h2>
+
+<p>Simply add <code>@cambridgecore/traffic-manager-agent</code> to your
+  Node.js project and register it as a middleware.</p>
+
+<pre>npm install @cambridgecore/traffic-manager-agent --save</pre>
+
+<pre>
+const TrafficManagerAgent = require('@cambridgecore/traffic-manager-agent');
+
+const trafficManagerAgentMiddleware = TrafficManagerAgent({siteId: '5c8ae4e7d3afe8a6ddfe7e33', siteSecret: 'XXXX'});
+
+app.use(trafficManagerAgentMiddleware);
+</pre>
+
+<h2>Integrating via HTTP API</h2>
+
+<p>You can integrate any application into Traffic Manager HQ.</p>
+
+<p>You just need to ship the samples yourself.</p>
+
+<p>For more details see <a href="/api">API Documentation</a>.

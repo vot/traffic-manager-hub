@@ -1,30 +1,43 @@
-<h1>Last 15 minutes</h1>
+<h1>Traffic Manager overview</h1>
 
-<div class="row-fluid">
-  <div class="col-sm-4">
-    <h2>Top IPs</h2>
-    <ul>
-    {{#each data.summaryByIp}}
-      <li>{{this.length}} requests: {{@key}}</li>
-    {{/each}}
-    </ul>
+{{#each data.sites}}
+
+  <h2>
+    <a href="/site/{{this.id}}/summary">
+      Site name: {{this.name}}
+    </a>
+  </h2>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="tm-statistic red">
+        <p class="heading">Requests</p>
+        <p class="score">45000</p>
+        <p class="avg">Frame avg: 3000/min</p>
+        <p class="avg">24h avg: 4300/min</p>
+      </div>
+    </div>
+
+
+    <div class="col-sm-4">
+      <div class="tm-statistic green">
+        <p class="heading">Blocked requests</p>
+        <p class="score">180</p>
+        <p class="avg">Frame avg: 12/min</p>
+        <p class="avg">24h avg: 6/min</p>
+      </div>
+    </div>
+
+
+    <div class="col-sm-4">
+      <div class="tm-statistic yellow">
+        <p class="heading">IP Hops</p>
+        <p class="score">150</p>
+        <p class="avg">Frame avg: 10/min</p>
+        <p class="avg">24h avg: 6/min</p>
+      </div>
+    </div>
+
   </div>
 
-  <div class="col-sm-4">
-    <h2>Top sessions</h2>
-    <ul>
-    {{#each data.summaryBySessionId}}
-      <li>{{this.length}} requests: {{@key}}</li>
-    {{/each}}
-    </ul>
-  </div>
-
-  <div class="col-sm-4">
-    <h2>Top User Agents</h2>
-    <ul>
-    {{#each data.summaryBySessionUA}}
-      <li>{{this.length}} requests: {{@key}}</li>
-    {{/each}}
-    </ul>
-  </div>
-</div>
+{{/each}}

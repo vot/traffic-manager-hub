@@ -6,26 +6,46 @@
   <title>Traffic Manager HQ</title>
   <link href="/public/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="/public/css/app.css" rel="stylesheet" type="text/css">
+
+  <link href="/public/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="/public/css/animate.css" rel="stylesheet" type="text/css">
+
+  <script src="/public/js/jquery.min.js"></script>
+  <script src="/public/js/bootstrap.min.js"></script>
+  <script src="/public/js/stupidtable.js"></script>
+  <script src="/public/js/main.js"></script>
+
 </head>
 
 <body>
   <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
     <div class="container">
       <ul class="nav navbar-nav">
-        <li><a class="navbar-brand" href="/">TrafficManager</a></li>
+        <li><a class="navbar-brand" href="/">Traffic Manager</a></li>
         <li class="separator"></li>
-        <li><a href="/api">API</a></li>
-        <li><a href="/request-log">Request log</a></li>
-        <!-- <li><a href="/dashboard">Dashboard</a></li> -->
-        <!-- <li><a href="/login">Login</a></li> -->
+        {{#if context.site.id}}
+          <li class="tm-context-selector"><a href="#">{{context.site.name}}</a></li>
+          <li class="separator"></li>
+          <li><a href="/site/{{context.site.id}}/summary">Summary</a></li>
+          <li><a href="/site/{{context.site.id}}/log-viewer">Log viewer</a></li>
+          <li><a href="/site/{{context.site.id}}/settings">Settings</a></li>
+          <!-- <li><a href="/ui/{{context.site.id}}/dashboard">Dashboard</a></li> -->
+        {{else}}
+          <li><a href="/api">API</a></li>
+          <li><a href="/readme">Readme</a></li>
+          <!-- <li><a href="/login">Login</a></li> -->
+        {{/if}}
       </ul>
+
     </div>
   </nav>
 
   <!-- <br /><br /><br /> -->
 
-  <div class="{{#if isHomepage}}hero-gradient{{else}}container{{/if}}">
-    {{{body}}}
+  <div class="tm-wrapper {{#if context.wrapperClass}}{{context.wrapperClass}}{{/if}}">
+    <div class="container">
+      {{{body}}}
+    </div>
   </div>
 
 </body>
