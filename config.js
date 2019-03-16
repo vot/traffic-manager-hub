@@ -17,4 +17,14 @@ const config = {
   mongoDbName
 };
 
+if (!mongoUrl) {
+  console.log('You must provide MONGO_URL variable.');
+  process.exit(1);
+}
+
+if (!mongoDbName) {
+  console.log('You must provide MONGO_DBNAME variable.');
+  process.exit(2);
+}
+
 module.exports = config;
