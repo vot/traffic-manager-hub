@@ -103,6 +103,18 @@ function Model(collectionName) {
       });
     },
 
+    count: function count(query, callback) {
+      _getClient((e, db) => {
+        const col = db.collection(collectionName);
+
+        col.count(query, (err, reply) => {
+          console.log(reply);
+          db.close();
+          return callback(err, reply);
+        });
+      });
+    },
+
     deleteOne: function deleteOne(query, callback) {
       _getClient((e, db) => {
         const col = db.collection(collectionName);

@@ -7,14 +7,13 @@
   <link href="/public/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="/public/css/app.css" rel="stylesheet" type="text/css">
 
-  <link href="/public/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-  <link href="/public/css/animate.css" rel="stylesheet" type="text/css">
-
   <script src="/public/js/jquery.min.js"></script>
   <script src="/public/js/bootstrap.min.js"></script>
   <script src="/public/js/stupidtable.js"></script>
   <script src="/public/js/main.js"></script>
 
+  <link href="/public/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="/public/css/animate.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -23,13 +22,24 @@
       <ul class="nav navbar-nav">
         <li><a class="navbar-brand" href="/">Traffic Manager</a></li>
         <li class="separator"></li>
-        {{#if context.site.id}}
-          <li class="tm-context-selector"><a href="#">{{context.site.name}}</a></li>
+        {{#if site.id}}
+
+          <li class="tm-context-selector">
+            <a type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{site.name}} <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              {{#each global.sites}}
+                <li><a href="/site/{{this.id}}/summary">{{this.name}}</a></li>
+              {{/each}}
+            </ul>
+          </li>
+
           <li class="separator"></li>
-          <li><a href="/site/{{context.site.id}}/summary">Summary</a></li>
-          <li><a href="/site/{{context.site.id}}/log-viewer">Log viewer</a></li>
-          <li><a href="/site/{{context.site.id}}/settings">Settings</a></li>
-          <!-- <li><a href="/ui/{{context.site.id}}/dashboard">Dashboard</a></li> -->
+          <li><a href="/site/{{site.id}}/summary">Summary</a></li>
+          <li><a href="/site/{{site.id}}/log-viewer">Log viewer</a></li>
+          <li><a href="/site/{{site.id}}/settings">Settings</a></li>
+          <!-- <li><a href="/ui/{{site.id}}/dashboard">Dashboard</a></li> -->
         {{else}}
           <li><a href="/api">API</a></li>
           <li><a href="/readme">Readme</a></li>
@@ -42,7 +52,7 @@
 
   <!-- <br /><br /><br /> -->
 
-  <div class="tm-wrapper {{#if context.wrapperClass}}{{context.wrapperClass}}{{/if}}">
+  <div class="tm-wrapper {{#if ui.wrapperClass}}{{ui.wrapperClass}}{{/if}}">
     <div class="container">
       {{{body}}}
     </div>

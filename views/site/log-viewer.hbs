@@ -1,9 +1,13 @@
 <h1>Log viewer</h1>
 
+<hr />
+
+<div id="tm-log-filters">
 <div class="row">
   <div class="col-xs-4">
     Frame:
-    <select>
+    <select id="filter_frame">
+      <option disabled selected></option>
       <option value="last-15">Last 15 minutes</option>
       <option value="last-30">Last 30 minutes</option>
       <option value="last-60">Last 1 hour</option>
@@ -25,37 +29,58 @@
   </div>
 </div>
 
-<hr/>
-
-<p>300 requests in the last 15 minutes</p>
-
 <br />
 
-<table class="table">
-<tr>
-  <th>IP</th>
-  <th>URL</th>
-  <th>User Agent</th>
-  <th>Session ID</th>
-  <th>Timestamp</th>
-  <th>Time processing</th>
-  <th>Tags</th>
-  <th>Response size</th>
-  <th>Status</th>
-</tr>
-{{#each data}}
-<tr>
-  <td>{{this.ip}}</td>
-  <td>{{this.url}}</td>
-  <td>{{this.userAgent}}</td>
-  <td>{{this.sessionId}}</td>
-  <td>{{this.timestamp}}</td>
-  <td>{{this.timeProcessing}}</td>
-  <td>{{this.tags}}</td>
-  <td>{{this.responseSize}}</td>
-  <td>{{this.status}}</td>
-</tr>
-{{/each}}
+<p>
+  Show columns:
+  <input type="checkbox" name="showColumns" value="ip" checked /> IP
+  <input type="checkbox" name="showColumns" value="statusCode" checked /> Status code
+  <input type="checkbox" name="showColumns" value="url" checked /> URL
+  <input type="checkbox" name="showColumns" value="responseSize" /> Response size
+  <input type="checkbox" name="showColumns" value="ua" /> User Agent
+  <input type="checkbox" name="showColumns" value="sessionId" /> Session ID
+  <input type="checkbox" name="showColumns" value="time" checked /> Time
+  <input type="checkbox" name="showColumns" value="timeProcessing" /> Time processing
+  <input type="checkbox" name="showColumns" value="tags" checked /> Tags
+</p>
+
+</div>
+
+<hr />
+
+<p>{{locals.log.length}} requests in the last 15 minutes</p>
+
+<hr />
+
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th data-sort="string" width="120">IP</th>
+      <th data-sort="string" width="100">Status code</th>
+      <th data-sort="string">URL</th>
+      <!-- <th>Response size</th> -->
+      <!-- <th>User Agent</th> -->
+      <!-- <th>Session ID</th> -->
+      <th data-sort="string" width="190">Timestamp</th>
+      <!-- <th>Time processing</th> -->
+      <th data-sort="string" width="200">Tags</th>
+    </tr>
+  </thead>
+
+  {{#each locals.log}}
+  <tr>
+    <td>{{this.ip}}</td>
+    <td>{{this.statusCode}}</td>
+    <td>{{this.url}}</td>
+    <!-- <td>{{this.responseSize}}</td> -->
+    <!-- <td>{{this.userAgent}}</td> -->
+    <!-- <td>{{this.sessionId}}</td> -->
+    <td>{{timestampToTime this.timestamp}}</td>
+    <!-- <td>{{this.timeProcessing}}</td> -->
+    <td>{{this.tags}}</td>
+  </tr>
+  {{/each}}
 </table>
 
 <!-- <pre>

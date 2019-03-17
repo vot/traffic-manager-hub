@@ -6,15 +6,16 @@ const samplesModel = require('../../../../models/mongo').samples;
 
 module.exports = (req, res) => {
   const samples = _.get(req, 'body.samples');
-  const machineId = _.get(req, 'body.machineId');
+  const instanceId = _.get(req, 'body.instanceId');
   const siteAuthId = req.params.siteId;
-  const siteAuthSecret = _.get(req, 'body.authSecret');
+  const siteAuthSecret = _.get(req, 'body.siteSecret');
 
-  // validate secret here
+  // get site record and validate secret here
 
-  console.log('Received samples from', machineId || req.ip);
 
-  const processed = analyser.analyseSamples(samples, { siteId: siteAuthId });
+  console.log('Received samples from', instanceId || req.ip);
+
+  const processed = analyser.analyseSamples({ instanceId, siteId: siteAuthId, samples });
 
   // store samples
   samplesModel.insertMany(processed, (err, result) => {
