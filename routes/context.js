@@ -3,8 +3,8 @@
 const _ = require('lodash');
 
 const allSitesArray = [
-  {id: '5c8ae4e7d3afe8a6ddfe7e33', name: 'Site 1'},
-  {id: '5c8ae4e7d3afe8a6ddfe7e34', name: 'Site 2'}
+  { id: '5c8ae4e7d3afe8a6ddfe7e33', name: 'Site 1' },
+  { id: '5c8ae4e7d3afe8a6ddfe7e34', name: 'Site 2' }
 ];
 
 function getGlobalContext() {
@@ -22,7 +22,7 @@ function getUIContext() {
 function getSiteContext(req) {
   const siteId = _.get(req, 'params.siteId');
 
-  return _.find(allSitesArray, {id: siteId});
+  return _.find(allSitesArray, { id: siteId });
 }
 
 function getFullContext(req) {

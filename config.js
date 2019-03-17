@@ -2,10 +2,11 @@
 
 const appPortRaw = process.env.PORT;
 const appPortParsed = parseInt(appPortRaw, 10);
+// eslint-disable-next-line eqeqeq
 const appPort = (appPortRaw == appPortParsed) ? appPortParsed : 4000;
 
 const baseUrlRaw = process.env.BASE_URL;
-const baseUrl = baseUrlRaw || 'http://localhost:' + appPort;
+const baseUrl = baseUrlRaw || `http://localhost:${appPort}`;
 
 const mongoUrl = process.env.MONGO_URL;
 const mongoDbName = process.env.MONGO_DBNAME;

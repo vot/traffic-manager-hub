@@ -26,7 +26,7 @@ module.exports = (req, res) => {
     const locals = {
       log: logData
     };
-    const newContext = _.merge(currentContext, {locals});
+    const newContext = _.merge(currentContext, { locals });
     console.log('Log hits:', logData.length);
 
     return res.render('site/log-viewer', newContext);

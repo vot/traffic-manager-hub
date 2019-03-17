@@ -16,6 +16,7 @@ function startApp() {
   app.disable('x-powered-by');
 
   hbs.registerPartials(partialsPath);
+  // eslint-disable-next-line no-underscore-dangle
   app.engine('hbs', hbs.__express);
 
   /* HBS helpers */

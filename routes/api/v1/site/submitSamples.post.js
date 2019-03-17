@@ -20,9 +20,8 @@ module.exports = (req, res) => {
   // store samples
   samplesModel.insertMany(processed, (err, result) => {
     if (err) {
-      return res.json({success: false, error: err.toString()});
+      return res.json({ success: false, error: err.toString() });
     }
-    return res.json({success: true});
+    return res.json({ success: true });
   });
-
 };

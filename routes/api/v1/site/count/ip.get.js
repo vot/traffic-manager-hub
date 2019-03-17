@@ -10,7 +10,7 @@ module.exports = (req, res) => {
   const queryFrame = req.query.frame || 'last-15';
 
   if (!queryIp) {
-    return res.json({success: false, error: 'E_MISSING_IP'});
+    return res.json({ success: false, error: 'E_MISSING_IP' });
   }
 
   const sampleFromTimestamp = context.mapRelativeTime(queryFrame);
@@ -25,7 +25,6 @@ module.exports = (req, res) => {
 
   // get query
   samplesModel.count(query, (err, logCount) => {
-    return res.json({success: true, count: logCount, start: sampleFromTimestamp});
+    return res.json({ success: true, count: logCount, start: sampleFromTimestamp });
   });
-
 };

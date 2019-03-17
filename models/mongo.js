@@ -84,7 +84,7 @@ function Model(collectionName) {
       _getClient((e, db) => {
         const col = db.collection(collectionName);
 
-        col.find({ id: id }).limit(1).toArray((err, reply) => {
+        col.find({ id }).limit(1).toArray((err, reply) => {
           db.close();
           return callback(err, (reply && reply.length ? reply[0] : null));
         });
