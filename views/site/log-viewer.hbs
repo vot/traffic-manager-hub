@@ -36,11 +36,11 @@
   <input type="checkbox" name="showColumns" value="ip" checked /> IP
   <input type="checkbox" name="showColumns" value="statusCode" checked /> Status code
   <input type="checkbox" name="showColumns" value="url" checked /> URL
-  <input type="checkbox" name="showColumns" value="responseSize" /> Response size
+  <input type="checkbox" name="showColumns" value="responseSize" checked /> Response size
   <input type="checkbox" name="showColumns" value="ua" /> User Agent
-  <input type="checkbox" name="showColumns" value="sessionId" /> Session ID
+  <input type="checkbox" name="showColumns" value="sessionId" checked /> Session ID
   <input type="checkbox" name="showColumns" value="time" checked /> Time
-  <input type="checkbox" name="showColumns" value="timeProcessing" /> Time processing
+  <input type="checkbox" name="showColumns" value="timeProcessing" checked /> Time processing
   <input type="checkbox" name="showColumns" value="tags" checked /> Tags
 </p>
 
@@ -59,11 +59,11 @@
       <th data-sort="string" width="120">IP</th>
       <th data-sort="string" width="100">Status code</th>
       <th data-sort="string">URL</th>
-      <!-- <th>Response size</th> -->
+      <th>Response size</th>
       <!-- <th>User Agent</th> -->
-      <!-- <th>Session ID</th> -->
+      <th>Session ID</th>
       <th data-sort="string" width="190">Timestamp</th>
-      <!-- <th>Time processing</th> -->
+      <th>Time processing</th>
       <th data-sort="string" width="200">Tags</th>
     </tr>
   </thead>
@@ -73,11 +73,11 @@
     <td>{{this.ip}}</td>
     <td>{{this.statusCode}}</td>
     <td>{{this.url}}</td>
-    <!-- <td>{{this.responseSize}}</td> -->
+    <td>{{this.responseSize}}</td>
     <!-- <td>{{this.userAgent}}</td> -->
-    <!-- <td>{{this.sessionId}}</td> -->
+    <td>{{this.sessionId}}</td>
     <td>{{timestampToTime this.timestamp}}</td>
-    <!-- <td>{{this.timeProcessing}}</td> -->
+    <td>{{this.timeProcessing}}</td>
     <td>{{this.tags}}</td>
   </tr>
   {{/each}}
