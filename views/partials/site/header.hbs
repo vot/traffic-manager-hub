@@ -1,0 +1,11 @@
+<h1 class="text-center">{{thisSite.meta.name}}</h1>
+
+<br />
+
+<div class="btn-group btn-group-justified" role="group" aria-label="Select view">
+  <a type="button" class="btn btn-default {{#if (eq thisSite.activeTab "overview")}}active{{/if}}" href="overview">Overview</a>
+  <a type="button" class="btn btn-default {{#if (eq thisSite.activeTab "log-viewer")}}active{{/if}}" href="log-viewer">Log viewer</a>
+  <a type="button" class="btn btn-default {{#if (eq thisSite.activeTab "settings")}}active{{/if}}" href="settings">Settings</a>
+</div>
+
+<br />

@@ -14,21 +14,23 @@ module.exports = (req, res) => {
 
   const query = {
     siteId,
-    timestamp: {
-      $gte: sampleFromTimestamp
-    }
+    // timestamp: {
+    //   $gte: sampleFromTimestamp
+    // }
   };
 
   // console.log('query', JSON.stringify(query, null, 2));
 
-  samplesModel.find(query, (err, logData) => {
-    const currentContext = context.getFullContext(req);
-    const locals = {
-      log: logData
-    };
-    const newContext = _.merge(currentContext, { locals });
-    console.log('Log hits:', logData.length);
+  context.getContext(req, (ctxErr, ctxData) => {
+    samplesModel.find(query, (err, logData) => {
+      const locals = {
+        log: logData
+      };
+      const newContext = _.merge(ctxData, { locals }, { thisSite: { activeTab: 'log-viewer' } });
+      console.log('newContext:', newContext);
+      console.log('Log hits:', logData.length);
 
-    return res.render('site/log-viewer', newContext);
+      return res.render('site/log-viewer', newContext);
+    });
   });
 };

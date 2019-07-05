@@ -1,15 +1,16 @@
 {
-  "name": "@cambridgecore/traffic-manager-hq",
+  "name": "@cambridgecore/traffic-manager-hub",
   "version": "0.0.1",
   "description": "Web service for aggregation and analysis of your web app traffic.",
   "keywords": [],
-  "main": "index.js",
+  "main": "main.js",
   "author": "Cambridge University Press",
   "repository": {
     "type": "git",
-    "url": "https://gitlab.aop.cambridge.org/aop-cms/traffic-manager-hq.git"
+    "url": "https://gitlab.aop.cambridge.org/aop-cms/traffic-manager-hub.git"
   },
   "scripts": {
+    "start": "node main.js",
     "lint": "eslint .",
     "test": "mocha **/*.spec.js"
   },

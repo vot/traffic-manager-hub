@@ -2,35 +2,60 @@
 
 const _ = require('lodash');
 
-const allSitesArray = [
-  { id: '5c8ae4e7d3afe8a6ddfe7e33', name: 'Site 1' },
-  { id: '5c8ae4e7d3afe8a6ddfe7e34', name: 'Site 2' }
-];
+const sitesModel = require('../models/mongo').sites;
+const samplesModel = require('../models/mongo').samples;
 
-function getGlobalContext() {
-  return {
-    sites: allSitesArray
+// const allSitesArray = [
+//   { id: '5c8ae4e7d3afe8a6ddfe7e33', name: 'Site 1' },
+//   { id: '5c8ae4e7d3afe8a6ddfe7e34', name: 'Site 2' }
+// ];
+
+function getGlobalData(callback) {
+  const rtn = {
+    allSites: [],
+    ui: {
+      wrapperClass: 'x-bg-gradient'
+    }
   };
+
+  sitesModel.find({}, (allSitesErr, allSitesData) => {
+    rtn.allSites = allSitesData;
+    return callback(allSitesErr, rtn);
+  });
 }
 
-function getUIContext() {
-  return {
-    wrapperClass: 'x-bg-gradient'
-  };
+function getOneSiteSamples(siteKey, callback) {
+  if (!siteKey.length) {
+    return callback();
+  }
+
+  const ts15MinAgo = (Date.now() / 1000) - 900;
+  const samplesQuery = { siteKey, timestamp: { $gte: ts15MinAgo } };
+
+  return samplesModel.find(samplesQuery, (samplesErr, samplesData) => {
+    return callback(samplesErr, samplesData);
+  });
 }
 
-function getSiteContext(req) {
-  const siteId = _.get(req, 'params.siteId');
+function getContext(req, callback) {
+  const thisSiteKey = _.get(req, 'params.siteKey', '');
 
-  return _.find(allSitesArray, { id: siteId });
-}
+  getGlobalData((globalContextErr, globalContextData) => {
+    getOneSiteSamples(thisSiteKey, (thisSiteErr, thisSiteSamples) => {
+      const allSitesMeta = globalContextData.allSites || [];
+      const thisSiteMeta = _.find(allSitesMeta, { siteKey: thisSiteKey });
 
-function getFullContext(req) {
-  return {
-    global: getGlobalContext(),
-    ui: getUIContext(),
-    site: getSiteContext(req)
-  };
+      const thisSiteContext = {
+        meta: thisSiteMeta,
+        samples: thisSiteSamples,
+        activeTab: 'summary'
+      };
+
+      const fullContext = _.extend({}, globalContextData, { thisSite: thisSiteContext });
+
+      return callback(null, fullContext);
+    });
+  });
 }
 
 function mapRelativeTime(inputString) {
@@ -58,9 +83,6 @@ function mapRelativeTime(inputString) {
 }
 
 module.exports = {
-  getGlobalContext,
-  getUIContext,
-  getSiteContext,
-  getFullContext,
+  getContext,
   mapRelativeTime
 };

@@ -2,17 +2,39 @@
 
 Web service for aggregation and analysis of your web app traffic.
 
-Register site in the Web UI to obtain Site ID and Site Secret.
+Hub is the component that acts as a C&C application (command and control)
+for Traffic Manager.
+
 
 ## Starting the service
 
-`MONGO_URL=mongodb://localhost:27017 MONGO_DBNAME=traffic-manager-hub PORT=4000 node index.js`
+This service takes three env vars:
+
+* `MONGO_URL`
+* `MONGO_DBNAME`
+* `PORT`
+* `BASE_URL`
+
+There are also two ways of starting the application:
+
+* `node main.js`
+* `npm run start`
+
+
+**Example**
+
+```
+MONGO_URL=mongodb://localhost:27017 MONGO_DBNAME=traffic-manager-hub PORT=4000 BASE_URL=http://localhost:4000/ npm run start
+```
 
 
 ## Integrating from Node app
 
 Simply integrate `@cambridgecore/traffic-manager-agent` middleware in your app
 and you're good to go.
+
+To integrate with Traffic Manager Hub you'll need to register your site
+in the Web UI to obtain Site ID and Site Secret.
 
 
 ## Integrating via HTTP

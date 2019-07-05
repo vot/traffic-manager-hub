@@ -1,7 +1,12 @@
 'use strict';
 
+const _ = require('lodash');
 const context = require('../../context');
 
 module.exports = (req, res) => {
-  return res.render('site/settings', context.getFullContext(req));
+  context.getContext(req, (ctxErr, ctxData) => {
+    const newContext = _.merge(ctxData, { thisSite: { activeTab: 'settings' } });
+
+    return res.render('site/settings', newContext);
+  });
 };

@@ -16,6 +16,11 @@ function startApp() {
   app.disable('x-powered-by');
 
   hbs.registerPartials(partialsPath);
+  hbs.registerHelper('eq', (arg1, arg2) => {
+    // console.log(`eq ${arg1} ${arg2} = ${arg1 == arg2}`);
+    return arg1 == arg2;
+  });
+
   // eslint-disable-next-line no-underscore-dangle
   app.engine('hbs', hbs.__express);
 
@@ -36,14 +41,16 @@ function startApp() {
 
   /* Routes */
   /* eslint-disable global-require */
-  app.get('/', require('./routes/ui/overview.get'));
+  app.get('/', require('./routes/ui/dashboard.get'));
   app.get('/api', require('./routes/ui/api.get'));
   app.get('/readme', require('./routes/ui/readme.get'));
   app.get('/login', require('./routes/ui/login.get'));
 
-  app.get('/site/:siteId/summary', require('./routes/ui/site/summary.get'));
-  app.get('/site/:siteId/log-viewer', require('./routes/ui/site/log-viewer.get'));
-  app.get('/site/:siteId/settings', require('./routes/ui/site/settings.get'));
+  app.get('/site/:siteKey', require('./routes/ui/site/_catchall.get'));
+  app.get('/site/:siteKey/overview', require('./routes/ui/site/overview.get'));
+  app.get('/site/:siteKey/log-viewer', require('./routes/ui/site/log-viewer.get'));
+  app.get('/site/:siteKey/settings', require('./routes/ui/site/settings.get'));
+  app.get('/site/:siteKey/*', require('./routes/ui/site/_catchall.get'));
 
 
   app.use('/api', jsonParser);
