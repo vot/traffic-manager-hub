@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-  <title>Traffic Manager HQ</title>
+  <title>Traffic Manager Hub</title>
   <link href="/public/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="/public/css/app.css" rel="stylesheet" type="text/css">
 
@@ -20,31 +20,40 @@
   <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
       <ul class="nav navbar-nav">
-        <li><a class="navbar-brand" href="/">Traffic Manager</a></li>
+        <li><span class="navbar-brand">Traffic Manager</span></li>
+
         <li class="separator"></li>
-        {{#if site.id}}
+
+        <li><a href="/">Dashboard</a></li>
+        <li><a href="/api">API</a></li>
+        <li><a href="/readme">Readme</a></li>
+        <!-- <li><a href="/login">Login</a></li> -->
+
+        <li class="separator"></li>
 
           <li class="tm-context-selector">
             <a type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {{site.name}} <span class="caret"></span>
+              {{#if thisSite.meta.name}}
+                {{thisSite.meta.name}} <span class="caret"></span>
+              {{else}}
+                Select a site <span class="caret"></span>
+              {{/if}}
             </a>
+
             <ul class="dropdown-menu">
-              {{#each global.sites}}
-                <li><a href="/site/{{this.id}}/summary">{{this.name}}</a></li>
+              {{#each allSites}}
+                <li><a href="/site/{{this.siteKey}}">{{this.name}}</a></li>
               {{/each}}
             </ul>
-          </li>
 
+          <!--
           <li class="separator"></li>
-          <li><a href="/site/{{site.id}}/summary">Summary</a></li>
-          <li><a href="/site/{{site.id}}/log-viewer">Log viewer</a></li>
-          <li><a href="/site/{{site.id}}/settings">Settings</a></li>
+          <li><a href="/site/{{thisSite.meta.siteKey}}/overview">Oveview</a></li>
+          <li><a href="/site/{{thisSite.meta.siteKey}}/log-viewer">Log viewer</a></li>
+          <li><a href="/site/{{thisSite.meta.siteKey}}/settings">Settings</a></li>
+          -->
+
           <!-- <li><a href="/ui/{{site.id}}/dashboard">Dashboard</a></li> -->
-        {{else}}
-          <li><a href="/api">API</a></li>
-          <li><a href="/readme">Readme</a></li>
-          <!-- <li><a href="/login">Login</a></li> -->
-        {{/if}}
       </ul>
 
     </div>

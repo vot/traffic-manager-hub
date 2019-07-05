@@ -68,7 +68,7 @@ function startApp() {
   /* eslint-enable global-require */
 
   app.listen(config.appPort, () => {
-    console.log(`TrafficManager HQ listening on port ${config.appPort}`);
+    console.log(`Traffic Manager Hub listening on port ${config.appPort}`);
   });
 
   return app;
