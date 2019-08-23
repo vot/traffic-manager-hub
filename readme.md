@@ -16,7 +16,7 @@ There two ways of starting the application:
 Developers will find `npm run start` familiar but not useful in environments
 without npm installed (i.e. Alpine Node images).
 
-## configuration
+## Configuration
 
 This service uses these env vars for configuration:
 
@@ -28,19 +28,26 @@ This service uses these env vars for configuration:
 
 **Example**
 
-`MONGO_URL=mongodb://localhost:27017 MONGO_DBNAME=tmhub PORT=80 BASE_URL=http://tmhub.example.com:4000/ npm run start`
+`MONGO_URL=mongodb://localhost:27017 MONGO_DBNAME=tmhub PORT=80 BASE_URL=http://tmhub.example.com/ npm run start`
 
 
-## Integrating from Node app
+## Integrating Traffic Manager Hub with your app
 
-Simply integrate `@vot/traffic-manager-agent` middleware in your app
-and you're good to go.
-
-To integrate with Traffic Manager Hub you'll need to register your site
-in the Web UI to obtain Site ID and Site Secret.
+_To integrate with Traffic Manager Hub you'll need to register your site
+in the Web UI to obtain **Site ID** and **Site Secret**._
 
 
-## Integrating from other apps
+### Node app
+
+Follow the instructions in `@vot/traffic-manager-agent` package
+to install Traffic Manager Agent in your app.
+
+Provide URL of your TM Hub instance, Site ID and Site Secret in configuration.
+
+Your application is now being monitored by Traffic Manager.
+
+
+### Other apps
 
 You can integrate Traffic Manager Hub with any application.
 
