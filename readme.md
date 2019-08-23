@@ -30,7 +30,7 @@ MONGO_URL=mongodb://localhost:27017 MONGO_DBNAME=traffic-manager-hub PORT=4000 B
 
 ## Integrating from Node app
 
-Simply integrate `@cambridgecore/traffic-manager-agent` middleware in your app
+Simply integrate `@vot/traffic-manager-agent` middleware in your app
 and you're good to go.
 
 To integrate with Traffic Manager Hub you'll need to register your site

@@ -9,13 +9,13 @@ contain suspicious or abusive traffic.</p>
 
 <h2>Integrating into Node.js applications</h2>
 
-<p>Simply add <code>@cambridgecore/traffic-manager-agent</code> to your
+<p>Simply add <code>@vot/traffic-manager-agent</code> to your
   Node.js project and register it as a middleware.</p>
 
-<pre>npm install @cambridgecore/traffic-manager-agent --save</pre>
+<pre>npm install @vot/traffic-manager-agent --save</pre>
 
 <pre>
-const TrafficManagerAgent = require('@cambridgecore/traffic-manager-agent');
+const TrafficManagerAgent = require('@vot/traffic-manager-agent');
 
 const trafficManagerAgentMiddleware = TrafficManagerAgent({siteId: '5c8ae4e7d3afe8a6ddfe7e33', siteSecret: 'XXXX'});
 
