@@ -8,24 +8,27 @@ for Traffic Manager.
 
 ## Starting the service
 
-This service takes three env vars:
+There two ways of starting the application:
+
+* `node main.js`
+* `npm run start`
+
+Developers will find `npm run start` familiar but not useful in environments
+without npm installed (i.e. Alpine Node images).
+
+## configuration
+
+This service uses these env vars for configuration:
 
 * `MONGO_URL`
 * `MONGO_DBNAME`
 * `PORT`
 * `BASE_URL`
 
-There are also two ways of starting the application:
-
-* `node main.js`
-* `npm run start`
-
 
 **Example**
 
-```
-MONGO_URL=mongodb://localhost:27017 MONGO_DBNAME=traffic-manager-hub PORT=4000 BASE_URL=http://localhost:4000/ npm run start
-```
+`MONGO_URL=mongodb://localhost:27017 MONGO_DBNAME=tmhub PORT=80 BASE_URL=http://tmhub.example.com:4000/ npm run start`
 
 
 ## Integrating from Node app
@@ -37,9 +40,16 @@ To integrate with Traffic Manager Hub you'll need to register your site
 in the Web UI to obtain Site ID and Site Secret.
 
 
-## Integrating via HTTP
+## Integrating from other apps
 
-Send requests formatted like this to `/api/v1/:siteId/submitSamples`:
+You can integrate Traffic Manager Hub with any application.
+
+Traffic Manager Hub exposes a simple REST API.
+
+All you have to do is to send JSON payload containing requests/events
+to `/api/v1/:siteId/submitSamples`.
+
+The payload should look like this:
 
 ```
 {
