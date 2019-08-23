@@ -55,5 +55,7 @@ body {padding-top: 50px;}
 
 .navbar-inverse .navbar-brand, .navbar-inverse .navbar-brand:focus, .navbar-inverse .navbar-brand:hover {color: #9d9d9d}
 
+.navbar-brand .navbar-icon {width: 48px; float: left; margin-right: 8px; margin-top: -13px}
+
 .sorting-asc {color: #3B5}
 .sorting-desc {color: #B54}
