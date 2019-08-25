@@ -1,7 +1,6 @@
 <!-- <h1 class="text-center">Traffic Manager Hub</h1> -->
 
-<!-- <h2>Alerts</h2> -->
-
+{{#if allSites}}
 <div class="panel panel-success">
   <div class="panel-heading">
    <h3 class="panel-title">Status summary</h3>
@@ -10,9 +9,18 @@
     <p>No alerts in the last 7 days.</p>
   </div>
 </div>
+{{/if}}
+
+{{#unless allSites}}
+<div class="text-center">
+  <p>There are no sites in this Traffic Manager Hub instance.</p>
+  <br />
+  <p><a class="btn btn-primary" href="/add-site">Create a new site now</a></p>
+</div>
+{{/unless}}
+
 
 <!-- <h2>All sites</h2> -->
-
 {{#each allSites}}
 
   <h2>

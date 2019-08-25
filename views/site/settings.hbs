@@ -6,3 +6,22 @@
 <p>Whitelisted IPs: <input type="text" /></p>
 
 <p>Monitoring frame: <input type="text" value="900" /></p>
+
+<p>Site Visibility: {{thisSite.meta.siteVisibility}}</p>
+
+
+<div class="panel panel-success">
+  <div class="panel-heading">
+   <h3 class="panel-title">App Integration Keys</h3>
+ </div>
+  <div class="panel-body">
+    <p><strong>Site ID:</strong> <code>{{thisSite.meta.siteId}}</code></p>
+    <p><strong>Site Secret:</strong> <code>{{thisSite.meta.siteSecret}}</code></p>
+    <br />
+    <p>
+      Integrate app using <code>siteId</code> and <code>siteSecret</code> provided above.
+      <br />
+      Once that's done you should see the data showing up on your site's dashboard.
+    </p>
+  </div>
+</div>

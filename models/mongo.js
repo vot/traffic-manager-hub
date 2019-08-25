@@ -27,7 +27,7 @@ function getClient(callback) {
     // const db = client;
     // db.close = client.close;
 
-    console.log('Connected to Mongo server');
+    // console.log('Connected to Mongo server');
     // return callback(null, db);
     return callback(null, client);
   });
