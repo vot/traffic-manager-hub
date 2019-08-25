@@ -49,6 +49,23 @@ function Model(collectionName) {
 
   const rtnModelObject = {
     _type: 'mongo',
+    insertOne: function insertMany(data, callback) {
+      getClient((error, client) => {
+        const db = client.db(mongoDbName);
+        if (error) {
+          console.log(error);
+          return callback(error);
+        }
+        const col = db.collection(collectionName);
+
+        col.insertOne(data, (err, r) => {
+          // console.log(r.upsertedId._id);
+          client.close();
+          return callback(err, r);
+        });
+      });
+    },
+
     insertMany: function insertMany(data, callback) {
       getClient((error, client) => {
         const db = client.db(mongoDbName);

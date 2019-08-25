@@ -30,7 +30,8 @@
         <li class="separator"></li>
 
         <li><a href="/">Dashboard</a></li>
-        <li><a href="/api">API</a></li>
+        <li><a href="/add-site">Add a site</a></li>
+        <!-- <li><a href="/api">API</a></li> -->
         <li><a href="/readme">Readme</a></li>
         <!-- <li><a href="/login">Login</a></li> -->
 
@@ -38,8 +39,8 @@
 
           <li class="tm-context-selector">
             <a type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {{#if thisSite.meta.name}}
-                {{thisSite.meta.name}} <span class="caret"></span>
+              {{#if thisSite.meta.siteName}}
+                {{thisSite.meta.siteName}} <span class="caret"></span>
               {{else}}
                 Select a site <span class="caret"></span>
               {{/if}}
@@ -47,7 +48,7 @@
 
             <ul class="dropdown-menu">
               {{#each allSites}}
-                <li><a href="/site/{{this.siteKey}}">{{this.name}}</a></li>
+                <li><a href="/site/{{this.siteKey}}">{{this.siteName}}</a></li>
               {{/each}}
             </ul>
 

@@ -1,0 +1,22 @@
+<h1>Add site</h1>
+
+<form action="/actions/add-site" method="POST">
+  <label>
+    Site name
+    <input type="text" name="siteName" value="" />
+  </label>
+
+  <br />
+
+  <label>
+    Visibility
+    <select name="siteVisibility">
+      <option value="public">Public</option>
+      <option value="private">Private</option>
+    </select>
+  </label>
+
+  <br />
+
+  <input type="submit" value="Next" />
+</form>

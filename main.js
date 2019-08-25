@@ -9,7 +9,8 @@ const path = require('path');
 
 const config = require('./config');
 
-const jsonParser = bodyParser.json();
+const bodyJsonParser = bodyParser.json();
+const bodyFormParser = bodyParser.urlencoded({ extended: true });
 
 function startApp() {
   const app = express();
@@ -43,10 +44,12 @@ function startApp() {
 
   /* Routes */
   /* eslint-disable global-require */
+  // UI Routes
   app.get('/', require('./routes/ui/dashboard.get'));
   app.get('/api', require('./routes/ui/api.get'));
   app.get('/readme', require('./routes/ui/readme.get'));
   app.get('/login', require('./routes/ui/login.get'));
+  app.get('/add-site', require('./routes/ui/add-site.get'));
 
   app.get('/site/:siteKey', require('./routes/ui/site/_catchall.get'));
   app.get('/site/:siteKey/overview', require('./routes/ui/site/overview.get'));
@@ -54,8 +57,12 @@ function startApp() {
   app.get('/site/:siteKey/settings', require('./routes/ui/site/settings.get'));
   app.get('/site/:siteKey/*', require('./routes/ui/site/_catchall.get'));
 
+  // UI Actions Routes
+  app.use('/actions', bodyFormParser);
+  app.post('/actions/add-site', require('./routes/ui/actions/add-site.post'));
 
-  app.use('/api', jsonParser);
+  // API Routes
+  app.use('/api', bodyJsonParser);
   app.post('/api/v1/site/:siteId/submitSamples', require('./routes/api/v1/site/submitSamples.post.js'));
   app.get('/api/v1/site/:siteId/count/ip', require('./routes/api/v1/site/count/ip.get.js'));
 
