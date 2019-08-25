@@ -46,7 +46,7 @@ function startApp() {
   /* eslint-disable global-require */
   // UI Routes
   app.get('/', require('./routes/ui/dashboard.get'));
-  app.get('/api', require('./routes/ui/api.get'));
+  // app.get('/api', require('./routes/ui/api.get'));
   app.get('/readme', require('./routes/ui/readme.get'));
   app.get('/login', require('./routes/ui/login.get'));
   app.get('/add-site', require('./routes/ui/add-site.get'));
@@ -60,6 +60,7 @@ function startApp() {
   // UI Actions Routes
   app.use('/actions', bodyFormParser);
   app.post('/actions/add-site', require('./routes/ui/actions/add-site.post'));
+  app.post('/actions/delete-site', require('./routes/ui/actions/delete-site.post'));
 
   // API Routes
   app.use('/api', bodyJsonParser);

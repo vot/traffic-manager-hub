@@ -9,23 +9,76 @@ contain suspicious or abusive traffic.</p>
 
 <h2>Integrating into Node.js applications</h2>
 
-<p>Simply add <code>@vot/traffic-manager-agent</code> to your
-  Node.js project and register it as a middleware.</p>
+<p>1. Add <code>@vot/traffic-manager-agent</code> as a dependency of your
+  Node.js application.</p>
 
 <pre>npm install @vot/traffic-manager-agent --save</pre>
+
+<br />
+
+<p>2. Initialise the Traffic Manager Agent middleware with your app's
+  configuration.
+</p>
 
 <pre>
 const TrafficManagerAgent = require('@vot/traffic-manager-agent');
 
-const trafficManagerAgentMiddleware = TrafficManagerAgent({siteId: '5c8ae4e7d3afe8a6ddfe7e33', siteSecret: 'XXXX'});
-
-app.use(trafficManagerAgentMiddleware);
+const TMAConfig = {
+  reporters: {
+    TMHub: {
+      siteId: '5c8ae4e7d3afe8a6ddfe7e33',
+      siteSecret: 'XXXX'
+    }
+  }
+};
+const trafficManagerAgentMiddleware = TrafficManagerAgent(TMAConfig);
 </pre>
+
+<br />
+
+<p>3. Register the middleware in your app with <code>app.use()</code>
+  <br />
+  <em>Make sure to register this before other routes so that Traffic Manager
+  can monitor full scope of incoming traffic.</em>
+
+  <pre>app.use(trafficManagerAgentMiddleware);</pre>
+</p>
+
 
 <h2>Integrating via HTTP API</h2>
 
 <p>You can integrate any application into Traffic Manager Hub.</p>
 
-<p>You just need to ship the samples yourself.</p>
+<p>
+  You just need to ship the samples yourself.
+  You can aggregate up to 1000 events into the <code>samples</code> array in a single request.</p>
 
-<p>For more details see <a href="/api">API Documentation</a>.
+
+<p>If your application ID is <code>5c8ae4e7d3afe8a6ddfe7e33</code> you should
+  send a <code>POST</code> request to
+  <code>https://tmhub.example.com/api/v1/5c8ae4e7d3afe8a6ddfe7e33/submitSamples</code>:</p>
+
+
+<p>
+  <strong>Example payload:</strong>
+  <br />
+  <pre>
+  {
+  	"siteSecret": "zN2EY69fmy303MUEs7ZkQv8sqeuFjFEp",
+  	"samples": [
+  		{
+  			"ip": "89.238.154.238",
+  			"url": "http://example.com/wp-login.php",
+  			"userAgent": "SampleUA/1.0.0",
+  			"timestamp": "1552604831677"
+  		},
+  		{
+  			"ip": "89.238.154.238",
+  			"url": "http://example.com/cpanel",
+  			"userAgent": "SampleUA/1.0.0",
+  			"timestamp": "1552604831681"
+  		}
+  	]
+  }
+  </pre>
+</p>

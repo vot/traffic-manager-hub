@@ -37,6 +37,7 @@
 
         <li class="separator"></li>
 
+        {{#if allSites}}
           <li class="tm-context-selector">
             <a type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {{#if thisSite.meta.siteName}}
@@ -51,6 +52,8 @@
                 <li><a href="/site/{{this.siteKey}}">{{this.siteName}}</a></li>
               {{/each}}
             </ul>
+          </li>
+        {{/if}}
 
           <!--
           <li class="separator"></li>
