@@ -14,8 +14,8 @@ const mongoDbName = config.mongoDbName;
  *
  * @param {function} callback Signature: (err, db)
  */
-function _getClient(callback) {
-  MongoClient.connect(mongoUrl, { useNewUrlParser: true }, (err, client) => {
+function getClient(callback) {
+  MongoClient.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
     if (err || !client) {
       console.log(`Couldn't connect to Mongo at ${mongoUrl}`);
       if (err) {
@@ -24,11 +24,12 @@ function _getClient(callback) {
       return callback(err);
     }
 
-    const db = client.db(mongoDbName);
-    db.close = client.close;
+    // const db = client;
+    // db.close = client.close;
 
-    // console.log('Connected correctly to server');
-    return callback(null, db);
+    console.log('Connected to Mongo server');
+    // return callback(null, db);
+    return callback(null, client);
   });
 }
 
@@ -49,7 +50,8 @@ function Model(collectionName) {
   const rtnModelObject = {
     _type: 'mongo',
     insertMany: function insertMany(data, callback) {
-      _getClient((error, db) => {
+      getClient((error, client) => {
+        const db = client.db(mongoDbName);
         if (error) {
           console.log(error);
           return callback(error);
@@ -58,14 +60,15 @@ function Model(collectionName) {
 
         col.insertMany(data, { multi: true }, (err, r) => {
           // console.log(r.upsertedId._id);
-          db.close();
+          client.close();
           return callback(err, r);
         });
       });
     },
 
     upsert: function upsert(data, callback) {
-      _getClient((error, db) => {
+      getClient((error, client) => {
+        const db = client.db(mongoDbName);
         if (error) {
           console.log(error);
           return callback(error);
@@ -74,18 +77,19 @@ function Model(collectionName) {
 
         col.updateOne({ id: data.id }, data, { upsert: true }, (err, r) => {
           // console.log(r.upsertedId._id);
-          db.close();
+          client.close();
           return callback(err, r);
         });
       });
     },
 
     getById: function getById(id, callback) {
-      _getClient((e, db) => {
+      getClient((error, client) => {
+        const db = client.db(mongoDbName);
         const col = db.collection(collectionName);
 
         col.find({ id }).limit(1).toArray((err, reply) => {
-          db.close();
+          client.close();
           return callback(err, (reply && reply.length ? reply[0] : null));
         });
       });
@@ -93,33 +97,37 @@ function Model(collectionName) {
 
 
     find: function find(query, callback) {
-      _getClient((e, db) => {
+      getClient((error, client) => {
+        const db = client.db(mongoDbName);
         const col = db.collection(collectionName);
 
         col.find(query).toArray((err, reply) => {
-          db.close();
+          client.close();
           return callback(err, reply);
         });
       });
     },
 
     count: function count(query, callback) {
-      _getClient((e, db) => {
+      getClient((error, client) => {
+        const db = client.db(mongoDbName);
         const col = db.collection(collectionName);
 
         col.count(query, (err, reply) => {
           console.log(reply);
-          db.close();
+          client.close();
           return callback(err, reply);
         });
       });
     },
 
     deleteOne: function deleteOne(query, callback) {
-      _getClient((e, db) => {
+      getClient((error, client) => {
+        const db = client.db(mongoDbName);
         const col = db.collection(collectionName);
 
         col.deleteOne(query, (err, reply) => {
+          client.close();
           return callback(null, reply);
         });
       });
