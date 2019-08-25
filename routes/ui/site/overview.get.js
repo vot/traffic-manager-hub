@@ -4,25 +4,53 @@ const _ = require('lodash');
 
 const context = require('../../context');
 const samplesModel = require('../../../models/mongo').samples;
-const getSummaryByCriteria = require('../../../lib/getSummaryByCriteria');
+// const getSummaryByCriteria = require('../../../lib/getSummaryByCriteria');
 
 module.exports = (req, res) => {
   // timestamp greater than 1 min ago
-  const siteId = req.params.siteId;
-  const query = { siteId };
+  // const siteKey = req.params.siteKey;
 
-  samplesModel.find(query, (err, logData) => {
-    context.getContext(req, (ctxErr, ctxData) => {
-      const locals = {
-        summary: {
-          byIp: getSummaryByCriteria(logData, 'ip', { limit: 50 }),
-          bySessionId: getSummaryByCriteria(logData, 'sessionId', { limit: 50 }),
-          bySessionUA: getSummaryByCriteria(logData, 'userAgent', { limit: 50 })
-        }
-      };
-      const newContext = _.merge(ctxData, locals, { thisSite: { activeTab: 'overview' } });
+  context.getContext(req, (ctxErr, ctxData) => {
+    const currentSiteId = _.get(ctxData, 'thisSite.meta.siteId');
+    if (!currentSiteId) {
+      return res.render('error', { error: 'Not in a site context.' });
+    }
 
-      return res.render('site/overview', newContext);
+    const lastHourQuery = {
+      siteId: currentSiteId,
+      timestamp: {
+        $gte: context.mapRelativeTime('last-60')
+      }
+    };
+
+    const last24HQuery = {
+      siteId: currentSiteId,
+      timestamp: {
+        $gte: context.mapRelativeTime('last-1440')
+      }
+    };
+
+    samplesModel.find(lastHourQuery, (lastHourErr, lastHourLogData) => {
+
+      samplesModel.count(last24HQuery, (last24HErr, last24HCount) => {
+
+        const locals = {
+          // summary: {
+          //   byIp: getSummaryByCriteria(logData, 'ip', { limit: 50 }),
+          //   bySessionId: getSummaryByCriteria(logData, 'sessionId', { limit: 50 }),
+          //   bySessionUA: getSummaryByCriteria(logData, 'userAgent', { limit: 50 })
+          // },
+          totals: {
+            requests: lastHourLogData.length,
+            requestsFrameAvg: _.round((lastHourLogData.length / 60), 2),
+            requests24hAvg: _.round((last24HCount / 1440), 2)
+          }
+        };
+        const newContext = _.merge(ctxData, locals, { thisSite: { activeTab: 'overview' } });
+        // console.log('locals', locals);
+
+        return res.render('site/overview', newContext);
+      });
     });
   });
 };

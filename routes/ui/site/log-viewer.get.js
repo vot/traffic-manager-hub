@@ -8,10 +8,9 @@ const samplesModel = require('../../../models/mongo').samples;
 module.exports = (req, res) => {
   // timestamp greater than 1 min ago
   // const siteId = req.params.siteId;
-  const siteId = res.locals;
+  // const siteId = res.locals;
   const qFrame = req.query.frame || 'last-15';
-
-  const query = { siteId };
+  const query = { };
 
   if (qFrame !== 'all') {
     const sampleFromTimestamp = context.mapRelativeTime(qFrame);
@@ -20,9 +19,15 @@ module.exports = (req, res) => {
     };
   }
 
-  // console.log('query', JSON.stringify(query, null, 2));
 
   context.getContext(req, (ctxErr, ctxData) => {
+    const currentSiteId = _.get(ctxData, 'thisSite.meta.siteId');
+    if (!currentSiteId) {
+      return res.render('error', { error: 'Not in a site context.' });
+    }
+
+    query.siteId = currentSiteId;
+
     samplesModel.find(query, (err, logData) => {
       const locals = {
         log: logData
