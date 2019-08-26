@@ -54,7 +54,7 @@ module.exports = (req, res) => {
               requests24hAvg: _.round((last24HCount / 1440), 2),
 
               blocked: lastHourBlockedCount,
-              blockedFrameAvg: _.round((lastHourCount / 60), 2)
+              blockedFrameAvg: _.round((lastHourBlockedCount / 60), 2)
             }
           };
           const newContext = _.merge(ctxData, locals, { thisSite: { activeTab: 'overview' } });
