@@ -130,8 +130,8 @@ function Model(collectionName) {
         const db = client.db(mongoDbName);
         const col = db.collection(collectionName);
 
-        col.count(query, (err, reply) => {
-          console.log(reply);
+        col.countDocuments(query, (err, reply) => {
+        // col.estimatedDocumentCount(query, (err, reply) => {
           client.close();
           return callback(err, reply);
         });

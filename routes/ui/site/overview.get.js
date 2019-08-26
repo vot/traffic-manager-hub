@@ -30,26 +30,38 @@ module.exports = (req, res) => {
       }
     };
 
-    samplesModel.find(lastHourQuery, (lastHourErr, lastHourLogData) => {
+    const lastHourBlockedQuery = {
+      siteId: currentSiteId,
+      status: '528',
+      timestamp: {
+        $gte: context.mapRelativeTime('last-60')
+      }
+    };
 
+
+    samplesModel.count(lastHourQuery, (lastHourErr, lastHourCount) => {
       samplesModel.count(last24HQuery, (last24HErr, last24HCount) => {
+        samplesModel.count(lastHourBlockedQuery, (countErr, lastHourBlockedCount) => {
+          const locals = {
+            // summary: {
+            //   byIp: getSummaryByCriteria(logData, 'ip', { limit: 50 }),
+            //   bySessionId: getSummaryByCriteria(logData, 'sessionId', { limit: 50 }),
+            //   bySessionUA: getSummaryByCriteria(logData, 'userAgent', { limit: 50 })
+            // },
+            totals: {
+              requests: lastHourCount,
+              requestsFrameAvg: _.round((lastHourCount / 60), 2),
+              requests24hAvg: _.round((last24HCount / 1440), 2),
 
-        const locals = {
-          // summary: {
-          //   byIp: getSummaryByCriteria(logData, 'ip', { limit: 50 }),
-          //   bySessionId: getSummaryByCriteria(logData, 'sessionId', { limit: 50 }),
-          //   bySessionUA: getSummaryByCriteria(logData, 'userAgent', { limit: 50 })
-          // },
-          totals: {
-            requests: lastHourLogData.length,
-            requestsFrameAvg: _.round((lastHourLogData.length / 60), 2),
-            requests24hAvg: _.round((last24HCount / 1440), 2)
-          }
-        };
-        const newContext = _.merge(ctxData, locals, { thisSite: { activeTab: 'overview' } });
-        // console.log('locals', locals);
+              blocked: lastHourBlockedCount,
+              blockedFrameAvg: _.round((lastHourCount / 60), 2)
+            }
+          };
+          const newContext = _.merge(ctxData, locals, { thisSite: { activeTab: 'overview' } });
+          // console.log('locals', locals);
 
-        return res.render('site/overview', newContext);
+          return res.render('site/overview', newContext);
+        });
       });
     });
   });

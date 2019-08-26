@@ -9,7 +9,7 @@ module.exports = (req, res) => {
   // timestamp greater than 1 min ago
   // const siteId = req.params.siteId;
   // const siteId = res.locals;
-  const qFrame = req.query.frame || 'last-15';
+  const qFrame = req.query.frame || 'last-60';
   const query = { };
 
   if (qFrame !== 'all') {

@@ -41,20 +41,20 @@ function getContext(req, callback) {
   const thisSiteKey = _.get(req, 'params.siteKey', '');
 
   getGlobalData((globalContextErr, globalContextData) => {
-    getOneSiteSamples(thisSiteKey, (thisSiteErr, thisSiteSamples) => {
-      const allSitesMeta = globalContextData.allSites || [];
-      const thisSiteMeta = _.find(allSitesMeta, { siteKey: thisSiteKey });
+    // getOneSiteSamples(thisSiteKey, (thisSiteErr, thisSiteSamples) => {
+    const allSitesMeta = globalContextData.allSites || [];
+    const thisSiteMeta = _.find(allSitesMeta, { siteKey: thisSiteKey });
 
-      const thisSiteContext = {
-        meta: thisSiteMeta,
-        samples: thisSiteSamples,
-        activeTab: 'summary'
-      };
+    const thisSiteContext = {
+      meta: thisSiteMeta,
+      // samples: thisSiteSamples,
+      activeTab: 'summary'
+    };
 
-      const fullContext = _.extend({}, globalContextData, { thisSite: thisSiteContext });
+    const fullContext = _.extend({}, globalContextData, { thisSite: thisSiteContext });
 
-      return callback(null, fullContext);
-    });
+    return callback(null, fullContext);
+    // });
   });
 }
 
