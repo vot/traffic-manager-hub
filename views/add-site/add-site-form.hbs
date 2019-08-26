@@ -1,22 +1,44 @@
-<h1>Add site</h1>
+<div class="container" style="max-width:800px">
 
-<form action="/actions/add-site" method="POST">
-  <label>
-    Site name
-    <input type="text" name="siteName" value="" />
-  </label>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+     <h3 class="panel-title">Add site</h3>
+   </div>
+    <div class="panel-body">
 
-  <br />
+      <form action="/actions/add-site" method="POST" class="form-horizontal">
 
-  <label>
-    Visibility
-    <select name="siteVisibility">
-      <option value="public">Public</option>
-      <option value="private">Private</option>
-    </select>
-  </label>
+        <div class="form-group">
+          <label for="siteName" class="col-sm-2 control-label">Site name</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="siteName" name="siteName" placeholder="Site name">
+          </div>
+        </div>
 
-  <br />
+        <br />
 
-  <input class="btn btn-primary" type="submit" value="Next" />
-</form>
+        <div class="form-group">
+          <label for="siteVisibility" class="col-sm-2 control-label">Site visibility</label>
+          <div class="col-sm-10">
+            <select id="siteVisibility" name="siteVisibility" class="form-control">
+              <option value="public">Public</option>
+              <option value="private">Private</option>
+            </select>
+          </div>
+        </div>
+
+        <br />
+
+        <!-- <input class="btn btn-primary" type="submit" value="Next" /> -->
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Next</button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+<div>

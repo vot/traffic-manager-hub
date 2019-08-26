@@ -1,27 +1,27 @@
-<h1>New site created</h1>
+<div class="container" style="max-width:800px">
 
-<br /><br />
-
-<div class="panel panel-success">
-  <div class="panel-heading">
-   <h3 class="panel-title">New site details</h3>
- </div>
-  <div class="panel-body">
-    <p><strong>Site Name:</strong> <code>{{site.siteName}}</code></p>
-    <p><strong>Site Key:</strong> <code>{{site.siteKey}}</code></p>
-    <p><strong>Site Visibility:</strong> <code>{{site.siteVisibility}}</code></p>
-    <p><strong>Site ID:</strong> <code>{{site.siteId}}</code></p>
-    <p><strong>Site Secret:</strong> <code>{{site.siteSecret}}</code></p>
-    <br />
-    <br />
-    <p>
-      Now you should integrate your site with <code>siteId</code> and <code>siteSecret</code> provided above.
+  <div class="panel panel-success">
+    <div class="panel-heading">
+     <h3 class="panel-title">New site created</h3>
+   </div>
+    <div class="panel-body">
+      <p><strong>Site Name:</strong> <code>{{site.siteName}}</code></p>
+      <p><strong>Site Key:</strong> <code>{{site.siteKey}}</code></p>
+      <p><strong>Site Visibility:</strong> <code>{{site.siteVisibility}}</code></p>
+      <p><strong>Site ID:</strong> <code>{{site.siteId}}</code></p>
+      <p><strong>Site Secret:</strong> <code>{{site.siteSecret}}</code></p>
       <br />
-      Once that's done you should see the data showing up on your site's dashboard.
-    </p>
-    <br />
-    <p>
-      <a class="btn btn-primary" href="/site/{{site.siteKey}}"> Go to your site's dashboard</a>
-    </p>
+      <br />
+      <p>
+        Now you should integrate your site with <code>siteId</code> and <code>siteSecret</code> provided above.
+        <br />
+        Once that's done you should see the data showing up on your site's dashboard.
+      </p>
+      <br />
+      <p>
+        <a class="btn btn-primary" href="/site/{{site.siteKey}}"> Go to your site's dashboard</a>
+      </p>
+    </div>
   </div>
+
 </div>

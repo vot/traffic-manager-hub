@@ -1,89 +1,94 @@
+<div class="container">
 {{> site/header}}
+</div>
 
-<div id="tm-log-filters">
-<div class="row">
-  <div class="col-xs-4">
-    Frame:
-    <select id="filter_frame">
-      <option disabled selected></option>
-      <option value="last-15">Last 15 minutes</option>
-      <option value="last-30">Last 30 minutes</option>
-      <option value="last-60">Last 1 hour</option>
-      <option value="last-180">Last 3 hours</option>
-      <option value="last-360">Last 6 hours</option>
-      <option value="last-720">Last 12 hours</option>
-      <option value="last-1440">Last 24 hours</option>
-      <option value="last-2880">Last 48 hours</option>
-      <option value="last-4320">Last 72 hours</option>
-      <option value="all">All time</option>
-    </select>
-  </div>
+<div class="container-fluid">
 
-  <div class="col-xs-8">
-    Filters:
-    <div class="btn-group" role="group" aria-label="Filtering by IP">
-      <button type="button" class="btn btn-primary btn-xs">X</button>
-      <button type="button" class="btn btn-primary btn-xs">IP: 11.22.33.44</button>
+  <div id="tm-log-filters">
+  <div class="row">
+    <div class="col-xs-4">
+      <!-- Frame:
+      <select id="filter_frame">
+        <option disabled selected></option>
+        <option value="last-15">Last 15 minutes</option>
+        <option value="last-30">Last 30 minutes</option>
+        <option value="last-60">Last 1 hour</option>
+        <option value="last-180">Last 3 hours</option>
+        <option value="last-360">Last 6 hours</option>
+        <option value="last-720">Last 12 hours</option>
+        <option value="last-1440">Last 24 hours</option>
+        <option value="last-2880">Last 48 hours</option>
+        <option value="last-4320">Last 72 hours</option>
+        <option value="all">All time</option>
+      </select> -->
+    </div>
+
+    <div class="col-xs-8">
+      Filters:
+      <div class="btn-group" role="group" aria-label="Filtering by IP">
+        <button type="button" class="btn btn-primary btn-xs">X</button>
+        <button type="button" class="btn btn-primary btn-xs">IP: 11.22.33.44</button>
+      </div>
     </div>
   </div>
-</div>
 
-<br />
+  <br />
 
-<p>
-  Show columns:
-  <input type="checkbox" name="showColumns" value="ip" checked /> IP
-  <input type="checkbox" name="showColumns" value="statusCode" checked /> Status code
-  <input type="checkbox" name="showColumns" value="url" checked /> URL
-  <input type="checkbox" name="showColumns" value="responseSize" checked /> Response size
-  <input type="checkbox" name="showColumns" value="ua" /> User Agent
-  <input type="checkbox" name="showColumns" value="sessionId" checked /> Session ID
-  <input type="checkbox" name="showColumns" value="time" checked /> Time
-  <input type="checkbox" name="showColumns" value="timeProcessing" checked /> Time processing
-  <input type="checkbox" name="showColumns" value="tags" checked /> Tags
-</p>
+  <p>
+    Show columns:
+    <input type="checkbox" name="showColumns" value="ip" checked /> IP
+    <input type="checkbox" name="showColumns" value="statusCode" checked /> Status code
+    <input type="checkbox" name="showColumns" value="url" checked /> URL
+    <input type="checkbox" name="showColumns" value="responseSize" checked /> Response size
+    <input type="checkbox" name="showColumns" value="ua" /> User Agent
+    <input type="checkbox" name="showColumns" value="sessionId" checked /> Session ID
+    <input type="checkbox" name="showColumns" value="time" checked /> Time
+    <input type="checkbox" name="showColumns" value="timeProcessing" checked /> Time processing
+    <input type="checkbox" name="showColumns" value="tags" checked /> Tags
+  </p>
 
-</div>
+  </div>
 
-<hr />
+  <hr />
 
-<p>{{locals.log.length}} requests in the last 15 minutes</p>
+  <p>{{locals.log.length}} requests in the last 15 minutes</p>
 
-<hr />
+  <hr />
 
 
-<table class="table table-hover">
-  <thead>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th data-sort="string" width="120">IP</th>
+        <th data-sort="string" width="100">Status code</th>
+        <th data-sort="string">URL</th>
+        <th>Response size</th>
+        <th>User Agent</th>
+        <th>Session ID</th>
+        <th data-sort="string" width="190">Timestamp</th>
+        <th>Time processing</th>
+        <th data-sort="string" width="200">Tags</th>
+        <th data-sort="string" width="50">Country</th>
+      </tr>
+    </thead>
+
+    {{#each locals.log}}
     <tr>
-      <th data-sort="string" width="120">IP</th>
-      <th data-sort="string" width="100">Status code</th>
-      <th data-sort="string">URL</th>
-      <th>Response size</th>
-      <th>User Agent</th>
-      <th>Session ID</th>
-      <th data-sort="string" width="190">Timestamp</th>
-      <th>Time processing</th>
-      <th data-sort="string" width="200">Tags</th>
-      <th data-sort="string" width="50">Country</th>
+      <td>{{this.ip}}</td>
+      <td>{{this.statusCode}}</td>
+      <td>{{this.url}}</td>
+      <td>{{this.responseSize}}</td>
+      <td>{{this.userAgent}}</td>
+      <td>{{this.sessionId}}</td>
+      <td>{{timestampToTime this.timestamp}}</td>
+      <td>{{this.timeProcessing}}</td>
+      <td>{{this.tags}}</td>
+      <td>{{this.geoCountry}}</td>
     </tr>
-  </thead>
+    {{/each}}
+  </table>
 
-  {{#each locals.log}}
-  <tr>
-    <td>{{this.ip}}</td>
-    <td>{{this.statusCode}}</td>
-    <td>{{this.url}}</td>
-    <td>{{this.responseSize}}</td>
-    <td>{{this.userAgent}}</td>
-    <td>{{this.sessionId}}</td>
-    <td>{{timestampToTime this.timestamp}}</td>
-    <td>{{this.timeProcessing}}</td>
-    <td>{{this.tags}}</td>
-    <td>{{this.geoCountry}}</td>
-  </tr>
-  {{/each}}
-</table>
-
-<!-- <pre>
-{{json data}}
-</pre> -->
+  <!-- <pre>
+  {{json data}}
+  </pre> -->
+</div>
