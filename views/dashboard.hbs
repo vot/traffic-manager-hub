@@ -1,3 +1,6 @@
+<div class="container" style="max-width:800px">
+
+
 <!-- <h1 class="text-center">Traffic Manager Hub</h1> -->
 
 <div class="alert alert-success" role="alert">
@@ -32,37 +35,33 @@ System status: Green
       {{this.siteName}}
     </a>
   </h2>
+  <!-- <p class="small">Last 60 minutes</p> -->
 
   <div class="row">
-    <div class="col-sm-4">
-      <div class="tm-statistic red">
-        <p class="heading">Requests</p>
-        <p class="score">{{totals.requests}}</p>
-        <p class="avg">Frame avg: {{totals.requestsFrameAvg}}/min</p>
-        <p class="avg">24h avg: {{totals.requests24hAvg}}/min</p>
+    <div class="col-sm-6">
+      <div class="lead">
+        <p>{{totals.requests}} Requests</p>
+        <p class="small">Frame avg: {{totals.requestsFrameAvg}}/min</p>
+        <p class="small">24h avg: {{totals.requests24hAvg}}/min</p>
       </div>
     </div>
 
 
-    <div class="col-sm-4">
-      <div class="tm-statistic green">
-        <p class="heading">Blocked requests</p>
-        <p class="score">{{totals.blocked}}</p>
-        <p class="avg">Frame avg: {{totals.blockedFrameAvg}}/min</p>
-        <p class="avg">24h avg: -/min</p>
+    <div class="col-sm-6">
+      <div class="lead">
+        <p>{{totals.blocked}} Blocked requests</p>
+        <p class="small">Frame avg: {{totals.blockedFrameAvg}}/min</p>
+        <p class="small">24h avg: -/min</p>
       </div>
     </div>
 
-
-    <div class="col-sm-4">
-      <div class="tm-statistic yellow">
-        <p class="heading">IP Hops</p>
-        <p class="score">-</p>
-        <p class="avg">Frame avg: -/min</p>
-        <p class="avg">24h avg: -/min</p>
-      </div>
-    </div>
 
   </div>
 
+  <br />
+  <hr />
+  <br />
+
 {{/each}}
+
+</div>
