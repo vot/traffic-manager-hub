@@ -32,7 +32,7 @@ module.exports = (req, res) => {
 
     const lastHourBlockedQuery = {
       siteId: currentSiteId,
-      status: '528',
+      status: 429,
       timestamp: {
         $gte: context.mapRelativeTime('last-60')
       }
