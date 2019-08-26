@@ -6,14 +6,98 @@
      <h3 class="panel-title">Site settings</h3>
    </div>
     <div class="panel-body">
-      <p>Throttling alert level: <input type="text" value="700" /></p>
+      <!-- <p>Throttling alert level: <input type="text" value="700" /></p>
       <p>Throttling block level: <input type="text" value="1000" /></p>
       <p>Blocked IPs: <input type="text" /></p>
       <p>Whitelisted IPs: <input type="text" /></p>
 
       <p>Monitoring frame: <input type="text" value="900" /></p>
 
-      <p>Site Visibility: {{thisSite.meta.siteVisibility}}</p>
+      <p>Site Visibility: {{thisSite.meta.siteVisibility}}</p> -->
+
+      <form action="/actions/update-site-settings" method="POST" class="form-horizontal">
+
+        <div class="form-group">
+          <label for="siteName" class="col-sm-2 control-label">Site name</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="siteName" name="siteName" placeholder="Site name" value="{{thisSite.meta.siteName}}">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="siteKey" class="col-sm-2 control-label">Site key</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="siteKey" name="siteKey" placeholder="Site key" value="{{thisSite.meta.siteKey}}">
+          </div>
+        </div>
+
+        <!-- <br /> -->
+
+        <div class="form-group">
+          <label for="siteVisibility" class="col-sm-2 control-label">Site visibility</label>
+          <div class="col-sm-10">
+            <select id="siteVisibility" name="siteVisibility" class="form-control">
+              <option value="public">Public</option>
+              <option value="private">Private</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- <br /> -->
+
+        <div class="form-group">
+          <label for="throttlingAlertLevel" class="col-sm-2 control-label">Throttling alert level</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="throttlingAlertLevel" name="throttlingAlertLevel" placeholder="Throttling alert level">
+          </div>
+        </div>
+
+        <!-- <br /> -->
+
+        <div class="form-group">
+          <label for="throttlingBlockLevel" class="col-sm-2 control-label">Throttling block level</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="throttlingBlockLevel" name="throttlingBlockLevel" placeholder="Throttling block level">
+          </div>
+        </div>
+
+        <!-- <br /> -->
+
+        <div class="form-group">
+          <label for="blockedIps" class="col-sm-2 control-label">Blocked IPs</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="blockedIps" name="blockedIps" placeholder="Blocked IPs">
+          </div>
+        </div>
+
+        <!-- <br /> -->
+
+        <div class="form-group">
+          <label for="whitelistedIps" class="col-sm-2 control-label">Whitelisted IPs</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="whitelistedIps" name="whitelistedIps" placeholder="Whitelisted IPs">
+          </div>
+        </div>
+
+        <!-- <br /> -->
+
+        <div class="form-group">
+          <label for="monitoringFrame" class="col-sm-2 control-label">Monitoring frame</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="monitoringFrame" name="monitoringFrame" placeholder="Monitoring frame" value="60">
+          </div>
+        </div>
+
+        <br />
+
+
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 
