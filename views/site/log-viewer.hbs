@@ -59,11 +59,12 @@
       <th data-sort="string" width="100">Status code</th>
       <th data-sort="string">URL</th>
       <th>Response size</th>
-      <!-- <th>User Agent</th> -->
+      <th>User Agent</th>
       <th>Session ID</th>
       <th data-sort="string" width="190">Timestamp</th>
       <th>Time processing</th>
       <th data-sort="string" width="200">Tags</th>
+      <th data-sort="string" width="50">Country</th>
     </tr>
   </thead>
 
@@ -73,11 +74,12 @@
     <td>{{this.statusCode}}</td>
     <td>{{this.url}}</td>
     <td>{{this.responseSize}}</td>
-    <!-- <td>{{this.userAgent}}</td> -->
+    <td>{{this.userAgent}}</td>
     <td>{{this.sessionId}}</td>
     <td>{{timestampToTime this.timestamp}}</td>
     <td>{{this.timeProcessing}}</td>
     <td>{{this.tags}}</td>
+    <td>{{this.geoCountry}}</td>
   </tr>
   {{/each}}
 </table>
