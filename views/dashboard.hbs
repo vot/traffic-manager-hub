@@ -3,10 +3,6 @@
 
 <!-- <h1 class="text-center">Traffic Manager Hub</h1> -->
 
-<div class="alert alert-success" role="alert">
-System status: Green
-</div>
-
 {{#if allSites}}
 <div class="panel panel-success">
   <div class="panel-heading">
@@ -18,6 +14,8 @@ System status: Green
 </div>
 {{/if}}
 
+<h1 class="text-center">Last <i>60 minutes</i> on your sites</h1>
+
 {{#unless allSites}}
 <div class="text-center">
   <p>There are no sites in this Traffic Manager Hub instance.</p>
@@ -26,42 +24,52 @@ System status: Green
 </div>
 {{/unless}}
 
+<br /><br />
 
-<!-- <h2>All sites</h2> -->
 {{#each allSites}}
 
-  <h2>
-    <a href="/site/{{this.siteKey}}">
-      {{this.siteName}}
-    </a>
-  </h2>
-  <!-- <p class="small">Last 60 minutes</p> -->
-
-  <div class="row">
-    <div class="col-sm-6">
-      <div class="lead">
-        <p>{{totals.requests}} Requests</p>
-        <p class="small">Frame avg: {{totals.requestsFrameAvg}}/min</p>
-        <p class="small">24h avg: {{totals.requests24hAvg}}/min</p>
-      </div>
-    </div>
-
-
-    <div class="col-sm-6">
-      <div class="lead">
-        <p>{{totals.blocked}} Blocked requests</p>
-        <p class="small">Frame avg: {{totals.blockedFrameAvg}}/min</p>
-        <p class="small">24h avg: -/min</p>
-      </div>
-    </div>
-
-
+<div class="panel">
+  <div class="panel-heading">
+    <h2 class="text-center">
+      <a href="/site/{{this.siteKey}}">
+        {{this.siteName}}
+      </a>
+    </h2>
   </div>
 
-  <br />
-  <hr />
-  <br />
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-4">
+        <div class="xlead">
+          <p>{{totals.requests}} Total Requests</p>
+          <p class="small">Frame avg: {{totals.requestsFrameAvg}}/min</p>
+          <p class="small">24h avg: {{totals.requests24hAvg}}/min</p>
+        </div>
+      </div>
 
+      <div class="col-xs-4">
+        <div class="xlead">
+          <p>{{totals.blocked}} Throttled Requests</p>
+          <p class="small">Frame avg: {{totals.blockedFrameAvg}}/min</p>
+          <p class="small">24h avg: -/min</p>
+        </div>
+      </div>
+
+      <div class="col-xs-4">
+        <div class="xlead">
+          <p class="small">{{totals.blocked}} IP hops</p>
+          <p class="small">{{totals.blocked}} IPs banned</p>
+          <p class="small">{{totals.blocked}} IPs whitelisted</p>
+          <!-- <a href="/site/{{this.siteKey}}" class="btn btn-primary btn-sm">
+            View details
+          </a> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br />
 {{/each}}
 
 </div>

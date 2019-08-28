@@ -40,18 +40,20 @@
     <input type="checkbox" name="showColumns" value="statusCode" checked /> Status code
     <input type="checkbox" name="showColumns" value="url" checked /> URL
     <input type="checkbox" name="showColumns" value="responseSize" checked /> Response size
-    <input type="checkbox" name="showColumns" value="ua" /> User Agent
+    <input type="checkbox" name="showColumns" value="ua" checked /> User Agent
+    <input type="checkbox" name="showColumns" value="referrer" /> Referrer
     <input type="checkbox" name="showColumns" value="sessionId" checked /> Session ID
     <input type="checkbox" name="showColumns" value="time" checked /> Time
     <input type="checkbox" name="showColumns" value="timeProcessing" checked /> Time processing
     <input type="checkbox" name="showColumns" value="tags" checked /> Tags
+    <input type="checkbox" name="showColumns" value="country" checked /> Country
   </p>
 
   </div>
 
   <hr />
 
-  <p>{{locals.log.length}} requests in the last 15 minutes</p>
+  <p>{{locals.log.length}} requests in the last 60 minutes</p>
 
   <hr />
 

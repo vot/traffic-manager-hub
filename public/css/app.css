@@ -59,3 +59,5 @@ body {padding-top: 50px;}
 
 .sorting-asc {color: #3B5}
 .sorting-desc {color: #B54}
+
+.form-horizontal .control-label {text-align: left}
