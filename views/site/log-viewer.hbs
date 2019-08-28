@@ -2,54 +2,90 @@
   {{> site/header}}
 </div>
 
-<div class="container-fluid">
-
+<div class="container" style="max-width:800px">
   <div id="tm-log-filters">
-  <div class="row">
-    <div class="col-xs-4">
-      <!-- Frame:
-      <select id="filter_frame">
-        <option disabled selected></option>
-        <option value="last-15">Last 15 minutes</option>
-        <option value="last-30">Last 30 minutes</option>
-        <option value="last-60">Last 1 hour</option>
-        <option value="last-180">Last 3 hours</option>
-        <option value="last-360">Last 6 hours</option>
-        <option value="last-720">Last 12 hours</option>
-        <option value="last-1440">Last 24 hours</option>
-        <option value="last-2880">Last 48 hours</option>
-        <option value="last-4320">Last 72 hours</option>
-        <option value="all">All time</option>
-      </select> -->
+    <div class="row">
+      <div class="col-xs-6">
+        <input type="text" name="search" class="form-control" placeholder="Search" />
+      </div>
+
+      <div class="col-xs-6">
+        <select id="filter_frame" class="form-control">
+          <option disabled selected>Change monitoring frame</option>
+          <option value="last-15">Last 15 minutes</option>
+          <option value="last-30">Last 30 minutes</option>
+          <option value="last-60">Last 1 hour</option>
+          <option value="last-180">Last 3 hours</option>
+          <option value="last-360">Last 6 hours</option>
+          <option value="last-720">Last 12 hours</option>
+          <option value="last-1440">Last 24 hours</option>
+          <option value="last-2880">Last 48 hours</option>
+          <option value="last-4320">Last 72 hours</option>
+          <option value="custom">custom</option>
+          <option value="all">All time</option>
+        </select>
+      </div>
+
     </div>
 
-    <div class="col-xs-8">
-      Filters:
-      <div class="btn-group" role="group" aria-label="Filtering by IP">
-        <button type="button" class="btn btn-primary btn-xs">X</button>
-        <button type="button" class="btn btn-primary btn-xs">IP: 11.22.33.44</button>
+    <br />
+
+    <div class="row">
+      <div class="col-xs-6">
+        <strong>Filters:</strong> &nbsp;
+        <!-- <div class="btn-group" role="group" aria-label="Filtering by IP">
+          <button type="button" class="btn btn-primary">X</button>
+          <button type="button" class="btn btn-primary">IP: 11.22.33.44</button>
+        </div> -->
+
+        (none)
+      </div>
+
+      <div class="col-xs-6">
+        <button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#exampleModal">
+          Show/hide columns
+        </button>
+      </div>
+    </div>
+
+
+    <div class="modal" id="exampleModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Show columns:</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>
+
+              <input type="checkbox" name="showColumns" value="ip" checked /> IP
+              <input type="checkbox" name="showColumns" value="statusCode" checked /> Status code
+              <input type="checkbox" name="showColumns" value="url" checked /> URL
+              <input type="checkbox" name="showColumns" value="responseSize" checked /> Response size
+              <input type="checkbox" name="showColumns" value="ua" checked /> User Agent
+              <input type="checkbox" name="showColumns" value="referrer" /> Referrer
+              <input type="checkbox" name="showColumns" value="sessionId" checked /> Session ID
+              <input type="checkbox" name="showColumns" value="time" checked /> Time
+              <input type="checkbox" name="showColumns" value="timeProcessing" checked /> Time processing
+              <input type="checkbox" name="showColumns" value="tags" checked /> Tags
+              <input type="checkbox" name="showColumns" value="country" checked /> Country
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <br />
+</div>
 
-  <p>
-    Show columns:
-    <input type="checkbox" name="showColumns" value="ip" checked /> IP
-    <input type="checkbox" name="showColumns" value="statusCode" checked /> Status code
-    <input type="checkbox" name="showColumns" value="url" checked /> URL
-    <input type="checkbox" name="showColumns" value="responseSize" checked /> Response size
-    <input type="checkbox" name="showColumns" value="ua" checked /> User Agent
-    <input type="checkbox" name="showColumns" value="referrer" /> Referrer
-    <input type="checkbox" name="showColumns" value="sessionId" checked /> Session ID
-    <input type="checkbox" name="showColumns" value="time" checked /> Time
-    <input type="checkbox" name="showColumns" value="timeProcessing" checked /> Time processing
-    <input type="checkbox" name="showColumns" value="tags" checked /> Tags
-    <input type="checkbox" name="showColumns" value="country" checked /> Country
-  </p>
-
-  </div>
+<div class="container-fluid">
 
   <hr />
 
@@ -89,8 +125,4 @@
     </tr>
     {{/each}}
   </table>
-
-  <!-- <pre>
-  {{json data}}
-  </pre> -->
 </div>
