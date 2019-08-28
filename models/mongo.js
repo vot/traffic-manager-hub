@@ -83,7 +83,7 @@ function Model(collectionName) {
       });
     },
 
-    upsert: function upsert(data, callback) {
+    updateOne: function updateOne(whereQuery, data, callback) {
       getClient((error, client) => {
         const db = client.db(mongoDbName);
         if (error) {
@@ -92,7 +92,8 @@ function Model(collectionName) {
         }
         const col = db.collection(collectionName);
 
-        col.updateOne({ id: data.id }, data, { upsert: true }, (err, r) => {
+        col.updateOne(whereQuery, { $set: data }, { upsert: true }, (err, r) => {
+          console.log(err);
           // console.log(r.upsertedId._id);
           client.close();
           return callback(err, r);

@@ -25,10 +25,10 @@ body {padding-top: 50px;}
   border: 2px solid transparent; border-radius: 3px;
 }
 
-.tm-statistic.green {border-color: #8fd68f}
-.tm-statistic.yellow {border-color: #d0d836}
-.tm-statistic.blue {border-color: #639fd0}
-.tm-statistic.red {border-color: #e26464}
+.tm-statistic.success {border-color: #8fd68f;background: #d2fcd2}
+.tm-statistic.warning {border-color: #efdc2c;background: #faf3d7}
+.tm-statistic.primary {border-color: #639fd0;background: #b1dcff}
+.tm-statistic.danger {border-color: #db6161;background: #ef8181}
 
 
 .tm-statistic .heading {

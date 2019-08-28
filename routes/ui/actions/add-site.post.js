@@ -3,19 +3,22 @@ const _ = require('lodash');
 const SitesModel = require('../../../models/mongo').sites;
 const SiteLib = require('../../../lib/site');
 
+const errorTitle = 'Failed to create a new site';
+const errorReturnLink = '/add-site';
+
 module.exports = (req, res) => {
   const siteName = _.get(req, 'body.siteName');
   const siteVisibility = _.get(req, 'body.siteVisibility');
 
   if (!siteName || !siteVisibility) {
-    return res.render('add-site/add-site-error', { error: 'Site name and site visibility must be specified.' });
+    return res.render('error', { error: 'Site name and site visibility must be specified.', title: errorTitle, returnLink: errorReturnLink });
   }
 
   const newSiteKey = SiteLib.generateSiteKeyFromName(siteName);
 
   return SitesModel.find({ siteKey: newSiteKey }, (findErr, findData) => {
     if (findData && findData.length) {
-      return res.render('add-site/add-site-error', { error: `siteKey "${newSiteKey}" already exists` });
+      return res.render('error', { error: `siteKey "${newSiteKey}" already exists`, title: errorTitle, returnLink: errorReturnLink });
     }
 
     // if no site with that key found then proceed with creating one
@@ -24,7 +27,7 @@ module.exports = (req, res) => {
 
     return SitesModel.insertOne(newSiteData, (insertErr, insertData) => {
       if (insertErr || !insertData) {
-        return res.render('add-site/add-site-error', { error: insertErr || 'insertData empty' });
+        return res.render('error', { error: insertErr || 'insertData empty', title: errorTitle, returnLink: errorReturnLink });
       }
 
       console.log(`siteKey "${newSiteData.siteKey}" inserted correctly`);

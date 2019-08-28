@@ -61,6 +61,7 @@ function startApp() {
   app.use('/actions', bodyFormParser);
   app.post('/actions/add-site', require('./routes/ui/actions/add-site.post'));
   app.post('/actions/delete-site', require('./routes/ui/actions/delete-site.post'));
+  app.post('/actions/update-site/site', require('./routes/ui/actions/update-site/site.post'));
 
   // API Routes
   app.use('/api', bodyJsonParser);

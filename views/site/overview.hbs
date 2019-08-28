@@ -4,14 +4,14 @@
   <div class="row">
     <div class="col-sm-4">
       <div class="tm-statistic">
-        <p class="heading">Requests</p>
+        <p class="heading">Total Requests</p>
         <p class="score">{{totals.requests}}</p>
         <p class="avg">Frame avg: {{totals.requestsFrameAvg}}/min</p>
         <p class="avg">24h avg: {{totals.requests24hAvg}}/min</p>
 
         <hr />
 
-        <!--
+        {{!
         <p>Request types</p>
 
         <ul class="breakdown">
@@ -21,28 +21,28 @@
           <li>20 Logins</li>
           <li>7 Malicious</li>
         </ul>
-         -->
+        }}
       </div>
     </div>
 
 
     <div class="col-sm-4">
       <div class="tm-statistic">
-        <p class="heading">Blocked requests</p>
+        <p class="heading">Throttled Requests</p>
         <p class="score">{{totals.blocked}}</p>
         <p class="avg">Frame avg: {{totals.blockedFrameAvg}}/min</p>
         <p class="avg">24h avg: {{totals.blocked24hAvg}}/min</p>
 
         <hr />
 
-        <!--
+        {{!
         <p>Criteria</p>
 
         <ul class="breakdown">
           <li>30 by IP: 12.34.56.78</li>
           <li>3 by SessionID: 3jiwe32jweiso</li>
         </ul>
-        -->
+        }}
       </div>
     </div>
 
@@ -56,14 +56,14 @@
 
         <hr />
 
-        <!--
+        {{!
         <p>Session IDs</p>
 
         <ul class="breakdown">
           <li>138 on 3jiwe32jweiso</li>
           <li>12 on 3jiwe32jweiso</li>
         </ul>
-        -->
+        }}
       </div>
     </div>
 
