@@ -1,5 +1,5 @@
 {
-  "name": "@vothub/traffic-manager-hub",
+  "name": "@vot/traffic-manager-hub",
   "version": "0.0.1",
   "description": "Web service for aggregation and analysis of your web app traffic (C&C for Traffic Manager Agent).",
   "keywords": [],
@@ -8,7 +8,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vothub/traffic-manager-hub.git"
+    "url": "https://github.com/vot/traffic-manager-hub.git"
   },
   "scripts": {
     "start": "node main.js",

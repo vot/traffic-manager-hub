@@ -39,7 +39,7 @@ in the Web UI to obtain **Site ID** and **Site Secret**._
 
 ### Node app
 
-Follow the instructions in `@vothub/traffic-manager-agent` package
+Follow the instructions in `@vot/traffic-manager-agent` package
 to install Traffic Manager Agent in your app.
 
 Provide URL of your TM Hub instance, Site ID and Site Secret in configuration.
