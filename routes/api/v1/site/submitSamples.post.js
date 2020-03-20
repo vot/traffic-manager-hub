@@ -8,7 +8,7 @@ module.exports = (req, res) => {
   const samples = _.get(req, 'body.samples');
   const instanceId = _.get(req, 'body.instanceId');
   const siteAuthId = req.params.siteId;
-  const siteAuthSecret = _.get(req, 'body.siteSecret');
+  // const siteAuthSecret = _.get(req, 'body.siteSecret');
 
   // get site record and validate secret here
 
