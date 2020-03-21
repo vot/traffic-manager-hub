@@ -18,7 +18,8 @@ module.exports = (req, res) => {
   const processed = analyser.analyseSamples({ instanceId, siteId: siteAuthId, samples });
 
   // store samples
-  samplesModel.insertMany(processed, (err, result) => {
+  // eslint-disable-next-line no-unused-vars
+  return samplesModel.insertMany(processed, (err, result) => {
     if (err) {
       return res.json({ success: false, error: err.toString() });
     }

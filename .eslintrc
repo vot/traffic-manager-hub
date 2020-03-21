@@ -5,6 +5,7 @@
     "node": true
   },
   "rules": {
+    "max-len": "warn",
     "comma-dangle": "off",
     "no-underscore-dangle": "warn",
     "no-console": "off",

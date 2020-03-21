@@ -10,6 +10,9 @@
     "type": "git",
     "url": "https://github.com/vot/traffic-manager-hub.git"
   },
+  "bin": {
+    "tmhub": "main.js"
+  },
   "scripts": {
     "start": "node main.js",
     "lint": "eslint .",

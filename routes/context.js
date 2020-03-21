@@ -3,7 +3,7 @@
 const _ = require('lodash');
 
 const sitesModel = require('../models/mongo').sites;
-const samplesModel = require('../models/mongo').samples;
+// const samplesModel = require('../models/mongo').samples;
 
 // const allSitesArray = [
 //   { id: '5c8ae4e7d3afe8a6ddfe7e33', name: 'Site 1' },
@@ -24,18 +24,18 @@ function getGlobalData(callback) {
   });
 }
 
-function getOneSiteSamples(siteKey, callback) {
-  if (!siteKey.length) {
-    return callback();
-  }
-
-  const ts15MinAgo = (Date.now() / 1000) - 900;
-  const samplesQuery = { siteKey, timestamp: { $gte: ts15MinAgo } };
-
-  return samplesModel.find(samplesQuery, (samplesErr, samplesData) => {
-    return callback(samplesErr, samplesData);
-  });
-}
+// function getOneSiteSamples(siteKey, callback) {
+//   if (!siteKey.length) {
+//     return callback();
+//   }
+//
+//   const ts15MinAgo = (Date.now() / 1000) - 900;
+//   const samplesQuery = { siteKey, timestamp: { $gte: ts15MinAgo } };
+//
+//   return samplesModel.find(samplesQuery, (samplesErr, samplesData) => {
+//     return callback(samplesErr, samplesData);
+//   });
+// }
 
 function getContext(req, callback) {
   const thisSiteKey = _.get(req, 'params.siteKey', '');

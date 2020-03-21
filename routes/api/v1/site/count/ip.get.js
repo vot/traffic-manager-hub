@@ -24,7 +24,7 @@ module.exports = (req, res) => {
   };
 
   // get query
-  samplesModel.count(query, (err, logCount) => {
+  return samplesModel.count(query, (err, logCount) => {
     return res.json({ success: true, count: logCount, start: sampleFromTimestamp });
   });
 };

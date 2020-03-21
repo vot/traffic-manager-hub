@@ -28,7 +28,7 @@ module.exports = (req, res) => {
 
     query.siteId = currentSiteId;
 
-    samplesModel.find(query, (err, logData) => {
+    return samplesModel.find(query, (err, logData) => {
       const locals = {
         log: logData
       };

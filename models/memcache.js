@@ -28,10 +28,12 @@ function Model(storeName) {
         throw new Error('ID. must be provided');
       }
 
-      data.timestamp = Date.now();
-      store[data.id] = data;
+      const newData = data;
 
-      return callback(null, data);
+      newData.timestamp = Date.now();
+      store[newData.id] = newData;
+
+      return callback(null, newData);
     },
 
     getById: function getById(id, callback) {

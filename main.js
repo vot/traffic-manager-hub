@@ -1,5 +1,4 @@
-'use strict';
-
+#!/usr/bin/env node
 require('dotenv').config();
 
 const express = require('express');
@@ -20,8 +19,7 @@ function startApp() {
 
   hbs.registerPartials(partialsPath);
   hbs.registerHelper('eq', (arg1, arg2) => {
-    // console.log(`eq ${arg1} ${arg2} = ${arg1 == arg2}`);
-    return arg1 == arg2;
+    return arg1 === arg2;
   });
 
   // eslint-disable-next-line no-underscore-dangle

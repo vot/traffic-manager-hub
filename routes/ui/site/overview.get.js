@@ -39,7 +39,7 @@ module.exports = (req, res) => {
     };
 
 
-    samplesModel.count(lastHourQuery, (lastHourErr, lastHourCount) => {
+    return samplesModel.count(lastHourQuery, (lastHourErr, lastHourCount) => {
       samplesModel.count(last24HQuery, (last24HErr, last24HCount) => {
         samplesModel.count(lastHourBlockedQuery, (countErr, lastHourBlockedCount) => {
           const locals = {

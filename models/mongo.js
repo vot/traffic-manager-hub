@@ -15,7 +15,8 @@ const mongoDbName = config.mongoDbName;
  * @param {function} callback Signature: (err, db)
  */
 function getClient(callback) {
-  MongoClient.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
+  const mongoOpts = { useNewUrlParser: true, useUnifiedTopology: true };
+  MongoClient.connect(mongoUrl, mongoOpts, (err, client) => {
     if (err || !client) {
       console.log(`Couldn't connect to Mongo at ${mongoUrl}`);
       if (err) {
@@ -58,7 +59,7 @@ function Model(collectionName) {
         }
         const col = db.collection(collectionName);
 
-        col.insertOne(data, (err, r) => {
+        return col.insertOne(data, (err, r) => {
           // console.log(r.upsertedId._id);
           client.close();
           return callback(err, r);
@@ -75,7 +76,7 @@ function Model(collectionName) {
         }
         const col = db.collection(collectionName);
 
-        col.insertMany(data, { multi: true }, (err, r) => {
+        return col.insertMany(data, { multi: true }, (err, r) => {
           // console.log(r.upsertedId._id);
           client.close();
           return callback(err, r);
@@ -92,7 +93,7 @@ function Model(collectionName) {
         }
         const col = db.collection(collectionName);
 
-        col.updateOne(whereQuery, { $set: data }, { upsert: true }, (err, r) => {
+        return col.updateOne(whereQuery, { $set: data }, { upsert: true }, (err, r) => {
           console.log(err);
           // console.log(r.upsertedId._id);
           client.close();
@@ -106,7 +107,7 @@ function Model(collectionName) {
         const db = client.db(mongoDbName);
         const col = db.collection(collectionName);
 
-        col.find({ id }).limit(1).toArray((err, reply) => {
+        return col.find({ id }).limit(1).toArray((err, reply) => {
           client.close();
           return callback(err, (reply && reply.length ? reply[0] : null));
         });
@@ -119,7 +120,7 @@ function Model(collectionName) {
         const db = client.db(mongoDbName);
         const col = db.collection(collectionName);
 
-        col.find(query).toArray((err, reply) => {
+        return col.find(query).toArray((err, reply) => {
           client.close();
           return callback(err, reply);
         });
@@ -131,7 +132,7 @@ function Model(collectionName) {
         const db = client.db(mongoDbName);
         const col = db.collection(collectionName);
 
-        col.countDocuments(query, (err, reply) => {
+        return col.countDocuments(query, (err, reply) => {
         // col.estimatedDocumentCount(query, (err, reply) => {
           client.close();
           return callback(err, reply);
@@ -144,7 +145,7 @@ function Model(collectionName) {
         const db = client.db(mongoDbName);
         const col = db.collection(collectionName);
 
-        col.deleteOne(query, (err, reply) => {
+        return col.deleteOne(query, (err, reply) => {
           client.close();
           return callback(null, reply);
         });

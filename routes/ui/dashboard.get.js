@@ -8,13 +8,11 @@ const SamplesModel = require('../../models/mongo').samples;
 
 module.exports = (req, res) => {
   context.getContext(req, (ctxErr, ctxData) => {
-
     console.log('ctxData', ctxData);
 
-    let fullContext = _.merge({}, ctxData);
+    const fullContext = _.merge({}, ctxData);
 
     async.each(fullContext.allSites, (site, cb) => {
-
       const lastHourQuery = {
         siteId: site.siteId,
         timestamp: {
@@ -37,20 +35,21 @@ module.exports = (req, res) => {
         }
       };
 
-      SamplesModel.count(lastHourQuery, (countErr, lastHourCount) => {
-        if (countErr) {
-          console.log('countErr', countErr);
+      SamplesModel.count(lastHourQuery, (lastHourCountErr, lastHourCount) => {
+        if (lastHourCountErr) {
+          console.log('lastHourCountErr', lastHourCountErr);
         }
 
         console.log('lastHourCount', lastHourCount);
 
-        SamplesModel.count(last24HQuery, (countErr, last24HCount) => {
-          if (countErr) {
-            console.log('countErr', countErr);
+        SamplesModel.count(last24HQuery, (last24HCountErr, last24HCount) => {
+          if (last24HCountErr) {
+            console.log('last24HCountErr', last24HCountErr);
           }
-          SamplesModel.count(lastHourBlockedQuery, (countErr, lastHourBlockedCount) => {
-            if (countErr) {
-              console.log('countErr', countErr);
+
+          SamplesModel.count(lastHourBlockedQuery, (lastHourBlockedCountErr, lastHourBlockedCount) => {
+            if (lastHourBlockedCountErr) {
+              console.log('lastHourBlockedCountErr', lastHourBlockedCountErr);
             }
 
             console.log('lastHourBlockedCount', lastHourBlockedCount);
