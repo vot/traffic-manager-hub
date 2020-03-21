@@ -1,5 +1,5 @@
 {
-  "name": "@vot/traffic-manager-hub",
+  "name": "traffic-manager-hub",
   "version": "0.0.1",
   "description": "Web service for aggregation and analysis of your web app traffic (C&C for Traffic Manager Agent).",
   "keywords": [],
