@@ -13,11 +13,12 @@ const bodyFormParser = bodyParser.urlencoded({ extended: true });
 
 function startApp() {
   const app = express();
+  const publicPath = path.join(__dirname, 'public');
+  const viewsPath = path.join(__dirname, 'views');
   const partialsPath = path.join(__dirname, 'views/partials');
 
   app.disable('x-powered-by');
 
-  hbs.registerPartials(partialsPath);
   hbs.registerHelper('eq', (arg1, arg2) => {
     return arg1 === arg2;
   });
@@ -35,9 +36,11 @@ function startApp() {
     return timeObject.toISOString();
   });
 
+  hbs.registerPartials(partialsPath);
+  app.set('views', viewsPath);
   app.set('view engine', 'hbs');
 
-  app.use('/public', express.static('public'));
+  app.use('/public', express.static(publicPath));
 
 
   /* Routes */
