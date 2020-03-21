@@ -1,6 +1,6 @@
 {
   "name": "traffic-manager-hub",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Web service for aggregation and analysis of your web app traffic (C&C for Traffic Manager Agent).",
   "keywords": [],
   "main": "main.js",
@@ -10,6 +10,14 @@
     "type": "git",
     "url": "https://github.com/vot/traffic-manager-hub.git"
   },
+  "bugs": {
+    "url": "https://github.com/vot/traffic-manager-hub/issues"
+  },
+  "keywords": [
+    "traffic",
+    "rate limit"
+  ],
+  "homepage": "https://vothub.com/traffic-manager",
   "bin": {
     "tmhub": "main.js"
   },
