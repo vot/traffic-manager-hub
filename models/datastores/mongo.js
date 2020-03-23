@@ -4,7 +4,7 @@
  * Mongo adapter
  */
 const MongoClient = require('mongodb').MongoClient;
-const config = require('../config');
+const config = require('../../config');
 
 const mongoUrl = config.mongoUrl;
 const mongoDbName = config.mongoDbName;
@@ -39,7 +39,7 @@ function getClient(callback) {
  *
  * @param {string} collectionName A name of collection to use
  */
-function Model(collectionName) {
+function Collection(collectionName) {
   if (!mongoUrl) {
     return undefined;
   }
@@ -157,10 +157,10 @@ function Model(collectionName) {
 }
 
 
-const sitesModel = new Model('sites');
-const samplesModel = new Model('samples');
+const SitesCollection = new Collection('sites');
+const SamplesCollection = new Collection('samples');
 
 module.exports = {
-  sites: sitesModel,
-  samples: samplesModel
+  sites: SitesCollection,
+  samples: SamplesCollection
 };

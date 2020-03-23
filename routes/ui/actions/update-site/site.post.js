@@ -1,6 +1,6 @@
 const _ = require('lodash');
 
-const SitesModel = require('../../../../models/mongo').sites;
+const SitesModel = require('../../../../models/sites');
 
 module.exports = (req, res) => {
   const siteId = _.get(req, 'body.siteId', '').trim();
@@ -20,12 +20,11 @@ module.exports = (req, res) => {
     });
   }
 
-  return SitesModel.find({ siteKey: siteKeyNew }, (findErr, findData) => {
-    const firstHit = _.head(findData);
+  return SitesModel.getSiteByKey(siteKeyNew, (findErr, siteData) => {
     console.log('siteId', siteId);
-    console.log('firstHit', firstHit);
+    console.log('siteData', siteData);
 
-    if (firstHit && firstHit.siteId !== siteId) {
+    if (siteData && siteData.siteId !== siteId) {
       return res.render('error', {
         error: `Site Key "${siteKeyNew}" already exists.`,
         title: errorTitle,
@@ -38,9 +37,9 @@ module.exports = (req, res) => {
     // if no site with that key found then proceed with creating one
     // const newSiteData = _.merge({}, storedData, { siteName, siteKey, siteVisibility });
     const newSiteData = { siteName, siteKey: siteKeyNew, siteVisibility };
-    console.log('update newSiteData', newSiteData);
+    // console.log('update newSiteData', newSiteData);
 
-    return SitesModel.updateOne({ siteId }, newSiteData, (updateErr, updateData) => {
+    return SitesModel.updateSiteSettings(newSiteData, (updateErr, updateData) => {
       if (updateErr || !updateData) {
         return res.render('error', {
           error: updateErr || 'updateData empty',

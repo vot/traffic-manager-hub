@@ -1,8 +1,5 @@
-'use strict';
-
-
-const samplesModel = require('../../../../../models/mongo').samples;
-const context = require('../../../../context');
+const SamplesModel = require('../../../../../models/samples');
+const mapRelativeTime = require('../../../../../lib/mapRelativeTime');
 
 module.exports = (req, res) => {
   const siteId = req.params.siteId;
@@ -13,18 +10,16 @@ module.exports = (req, res) => {
     return res.json({ success: false, error: 'E_MISSING_IP' });
   }
 
-  const sampleFromTimestamp = context.mapRelativeTime(queryFrame);
+  const sampleFromTimestamp = mapRelativeTime(queryFrame);
 
   const query = {
     siteId,
     ip: queryIp,
-    timestamp: {
-      $gte: sampleFromTimestamp
-    }
+    tsFrom: sampleFromTimestamp
   };
 
-  // get query
-  return samplesModel.count(query, (err, logCount) => {
+  // count the events
+  return SamplesModel.getSamplesCount(query, (err, logCount) => {
     return res.json({ success: true, count: logCount, start: sampleFromTimestamp });
   });
 };

@@ -2,40 +2,22 @@
 
 const _ = require('lodash');
 
-const sitesModel = require('../models/mongo').sites;
+const SitesModel = require('../models/sites');
 // const samplesModel = require('../models/mongo').samples;
-
-// const allSitesArray = [
-//   { id: '5c8ae4e7d3afe8a6ddfe7e33', name: 'Site 1' },
-//   { id: '5c8ae4e7d3afe8a6ddfe7e34', name: 'Site 2' }
-// ];
 
 function getGlobalData(callback) {
   const rtn = {
     allSites: [],
     ui: {
-      wrapperClass: 'x-bg-gradient'
+      wrapperClass: 'tm-bg-gradient'
     }
   };
 
-  sitesModel.find({}, (allSitesErr, allSitesData) => {
+  SitesModel.getAllSites((allSitesErr, allSitesData) => {
     rtn.allSites = allSitesData;
     return callback(allSitesErr, rtn);
   });
 }
-
-// function getOneSiteSamples(siteKey, callback) {
-//   if (!siteKey.length) {
-//     return callback();
-//   }
-//
-//   const ts15MinAgo = (Date.now() / 1000) - 900;
-//   const samplesQuery = { siteKey, timestamp: { $gte: ts15MinAgo } };
-//
-//   return samplesModel.find(samplesQuery, (samplesErr, samplesData) => {
-//     return callback(samplesErr, samplesData);
-//   });
-// }
 
 function getContext(req, callback) {
   const thisSiteKey = _.get(req, 'params.siteKey', '');
@@ -58,31 +40,6 @@ function getContext(req, callback) {
   });
 }
 
-function mapRelativeTime(inputString) {
-  const now = Date.now();
-  let rtn = now;
-
-  let offsetMin = 10;
-  let offsetSec;
-
-  if (inputString.startsWith('last-')) {
-    offsetMin = inputString.substr(5);
-  }
-  console.log('offsetMin', offsetMin);
-
-  if (offsetMin) {
-    offsetSec = offsetMin * 60;
-  }
-  console.log('offsetSec', offsetSec);
-
-  if (offsetSec) {
-    rtn = now - (offsetSec * 1000);
-  }
-
-  return rtn;
-}
-
 module.exports = {
   getContext,
-  mapRelativeTime
 };

@@ -3,7 +3,8 @@
 const _ = require('lodash');
 
 const context = require('../../context');
-const samplesModel = require('../../../models/mongo').samples;
+const mapRelativeTime = require('../../../lib/mapRelativeTime');
+const SamplesModel = require('../../../models/samples');
 
 module.exports = (req, res) => {
   // timestamp greater than 1 min ago
@@ -13,10 +14,8 @@ module.exports = (req, res) => {
   const query = { };
 
   if (qFrame !== 'all') {
-    const sampleFromTimestamp = context.mapRelativeTime(qFrame);
-    query.timestamp = {
-      $gte: sampleFromTimestamp
-    };
+    const sampleFromTimestamp = mapRelativeTime(qFrame);
+    query.tsFrom = sampleFromTimestamp;
   }
 
 
@@ -28,7 +27,7 @@ module.exports = (req, res) => {
 
     query.siteId = currentSiteId;
 
-    return samplesModel.find(query, (err, logData) => {
+    return SamplesModel.getSamples(query, (err, logData) => {
       const locals = {
         log: logData
       };

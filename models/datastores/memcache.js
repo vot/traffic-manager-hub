@@ -12,7 +12,7 @@ const cache = {};
  *
  * @param {string} collectionName A name of collection to use
  */
-function Model(storeName) {
+function Collection(storeName) {
   if (typeof storeName !== 'string' || !storeName.length) {
     throw new Error('Store name provided to base model needs to be a string.');
   }
@@ -62,11 +62,10 @@ function Model(storeName) {
   return rtnModelObject;
 }
 
-
-const sitesModel = new Model('sites');
-const requestsModel = new Model('requests');
+const SitesCollection = new Collection('sites');
+const SamplesCollection = new Collection('samples');
 
 module.exports = {
-  sites: sitesModel,
-  requests: requestsModel
+  sites: SitesCollection,
+  samples: SamplesCollection
 };

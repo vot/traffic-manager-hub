@@ -1,6 +1,6 @@
 const _ = require('lodash');
 
-const SitesModel = require('../../../models/mongo').sites;
+const SitesModel = require('../../../models/sites');
 const SiteLib = require('../../../lib/site');
 
 const errorTitle = 'Failed to create a new site';
@@ -16,8 +16,8 @@ module.exports = (req, res) => {
 
   const newSiteKey = SiteLib.generateSiteKeyFromName(siteName);
 
-  return SitesModel.find({ siteKey: newSiteKey }, (findErr, findData) => {
-    if (findData && findData.length) {
+  return SitesModel.getSiteByKey(newSiteKey, (findErr, findData) => {
+    if (findData) {
       return res.render('error', { error: `siteKey "${newSiteKey}" already exists`, title: errorTitle, returnLink: errorReturnLink });
     }
 
@@ -25,7 +25,7 @@ module.exports = (req, res) => {
     const newSiteData = SiteLib.createSiteObject({ siteName, siteVisibility });
     console.log('inserting newSiteData', newSiteData);
 
-    return SitesModel.insertOne(newSiteData, (insertErr, insertData) => {
+    return SitesModel.registerNewSite(newSiteData, (insertErr, insertData) => {
       if (insertErr || !insertData) {
         return res.render('error', { error: insertErr || 'insertData empty', title: errorTitle, returnLink: errorReturnLink });
       }

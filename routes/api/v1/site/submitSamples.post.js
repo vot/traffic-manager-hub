@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 const analyser = require('../../../../lib/analyser');
-const samplesModel = require('../../../../models/mongo').samples;
+const SamplesModel = require('../../../../models/samples');
 
 module.exports = (req, res) => {
   const samples = _.get(req, 'body.samples');
@@ -19,7 +19,7 @@ module.exports = (req, res) => {
 
   // store samples
   // eslint-disable-next-line no-unused-vars
-  return samplesModel.insertMany(processed, (err, result) => {
+  return SamplesModel.insertSamples(processed, (err, result) => {
     if (err) {
       return res.json({ success: false, error: err.toString() });
     }
