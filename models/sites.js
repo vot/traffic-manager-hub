@@ -29,8 +29,8 @@ function updateSiteSettings(siteData, callback) {
   return MongoSitesCollection.updateOne({ siteId: siteData.siteId }, siteData, callback);
 }
 
-function deleteSite(siteKey, siteSecret, callback) {
-  return MongoSitesCollection.deleteOne({ siteKey, siteSecret }, callback);
+function deleteSite(siteId, siteSecret, callback) {
+  return MongoSitesCollection.deleteOne({ siteId, siteSecret }, callback);
 }
 
 module.exports = {

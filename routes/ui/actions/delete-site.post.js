@@ -17,7 +17,7 @@ module.exports = (req, res) => {
 
     const siteId = siteData.siteId;
 
-    return SitesModel.deleteSite({ siteId, siteSecret }, (deleteErr, deleteData) => {
+    return SitesModel.deleteSite(siteId, siteSecret, (deleteErr, deleteData) => {
       if (deleteErr || !deleteData) {
         return res.render('add-site/add-site-error', { error: deleteErr || 'deleteData empty' });
       }
