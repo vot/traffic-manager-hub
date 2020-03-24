@@ -54,7 +54,7 @@ function initDatabase() {
     configDb.run(createTableQueryUsers);
     dataDb.run(createTableQuerySamples);
   });
-  console.log('SQLite database initialised successfully.');
+  // console.log('SQLite database initialised successfully.');
   configDb.close();
 }
 

@@ -1,6 +1,10 @@
 const _ = require('lodash');
-const MongoSamplesCollection = require('./datastores/mongo').samples;
+
+const datastores = require('./datastores');
 const mapRelativeTime = require('../lib/mapRelativeTime');
+
+const selectedDatastore = datastores.autoselect();
+const MongoSamplesCollection = datastores.mongo.samples;
 
 /**
  * Count samples for a given site
@@ -9,24 +13,29 @@ const mapRelativeTime = require('../lib/mapRelativeTime');
  * @callback (err, count) Returns error object or integer with result count
  */
 function getSamplesCount(opts, callback) {
-  const mongoQuery = {
-    siteId: opts.siteId,
-    timestamp: {
-      $gte: opts.tsFrom,
+  if (selectedDatastore === 'mongo') {
+    const mongoQuery = {
+      siteId: opts.siteId,
+      timestamp: {
+        $gte: opts.tsFrom,
+      }
+    };
+    if (opts.ip) {
+      mongoQuery.ip = opts.ip;
     }
-  };
-  if (opts.ip) {
-    mongoQuery.ip = opts.ip;
-  }
-  if (opts.status) {
-    mongoQuery.status = opts.status;
+    if (opts.status) {
+      mongoQuery.status = opts.status;
+    }
+
+    return MongoSamplesCollection.count(mongoQuery, callback);
   }
 
-  return MongoSamplesCollection.count(mongoQuery, callback);
+  return callback('SQLite not ready yet');
 }
 
 /**
  * Generates traffic "load average" summary
+ * Wrapper function - makes three getSamplesCount queries and aggregates them.
  */
 function getTrafficLoadAvg(opts, callback) {
   const lastHourQuery = {
@@ -85,18 +94,25 @@ function getTrafficLoadAvg(opts, callback) {
 }
 
 function getSamples(opts, callback) {
-  const mongoQuery = {
-    siteId: opts.siteId,
-    timestamp: {
-      $gte: opts.tsFrom,
-    }
-  };
+  if (selectedDatastore === 'mongo') {
+    const mongoQuery = {
+      siteId: opts.siteId,
+      timestamp: {
+        $gte: opts.tsFrom,
+      }
+    };
+    return MongoSamplesCollection.find(mongoQuery, callback);
+  }
 
-  return MongoSamplesCollection.find(mongoQuery, callback);
+  return callback('SQLite not ready yet');
 }
 
 function insertSamples(samples, callback) {
-  return MongoSamplesCollection.insertMany(samples, callback);
+  if (selectedDatastore === 'mongo') {
+    return MongoSamplesCollection.insertMany(samples, callback);
+  }
+
+  return callback('SQLite not ready yet');
 }
 
 module.exports = {
