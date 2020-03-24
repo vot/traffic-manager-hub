@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.0.3
+- Use "now-" prefix for relative time
+- Improve model abstraction
+
+
 ## v0.0.2
 - Add badges in readme
 - Add changelog
