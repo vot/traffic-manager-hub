@@ -4,7 +4,7 @@ const mapRelativeTime = require('../../../../../lib/mapRelativeTime');
 module.exports = (req, res) => {
   const siteId = req.params.siteId;
   const queryIp = req.query.ip;
-  const queryFrame = req.query.frame || 'last-15';
+  const queryFrame = req.query.frame || 'now-15';
 
   if (!queryIp) {
     return res.json({ success: false, error: 'E_MISSING_IP' });

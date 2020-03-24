@@ -31,18 +31,18 @@ function getSamplesCount(opts, callback) {
 function getTrafficLoadAvg(opts, callback) {
   const lastHourQuery = {
     siteId: opts.siteId,
-    tsFrom: mapRelativeTime('last-60')
+    tsFrom: mapRelativeTime('now-60')
   };
 
   const lastHourBlockedQuery = {
     siteId: opts.siteId,
     status: 429,
-    tsFrom: mapRelativeTime('last-60')
+    tsFrom: mapRelativeTime('now-60')
   };
 
   const last24HQuery = {
     siteId: opts.siteId,
-    tsFrom: mapRelativeTime('last-1440')
+    tsFrom: mapRelativeTime('now-1440')
   };
 
   getSamplesCount(lastHourQuery, (lastHourCountErr, lastHourCount) => {
