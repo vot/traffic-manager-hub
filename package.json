@@ -2,7 +2,10 @@
   "name": "traffic-manager-hub",
   "version": "0.0.2",
   "description": "Web service for aggregation and analysis of your web app traffic (C&C for Traffic Manager Agent).",
-  "keywords": [],
+  "keywords": [
+    "traffic",
+    "rate limit"
+  ],
   "main": "main.js",
   "author": "Vot Z <https://vot-z.com>",
   "license": "MIT",
@@ -13,10 +16,6 @@
   "bugs": {
     "url": "https://github.com/vot/traffic-manager-hub/issues"
   },
-  "keywords": [
-    "traffic",
-    "rate limit"
-  ],
   "homepage": "https://vothub.com/traffic-manager",
   "bin": {
     "tmhub": "main.js"
@@ -36,6 +35,7 @@
     "hbs": "^4.1.0",
     "lodash": "^4.17.15",
     "mongodb": "^3.5.5",
+    "sqlite3": "^4.1.1",
     "uuid": "^7.0.2"
   },
   "devDependencies": {
