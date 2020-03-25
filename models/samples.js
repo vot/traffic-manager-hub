@@ -3,7 +3,7 @@ const datastores = require('./datastores');
 const mapRelativeTime = require('../lib/mapRelativeTime');
 
 const selectedDatastore = datastores.autoselect();
-const MongoSamplesCollection = datastores.mongo.samples;
+const MongoSamplesCollection = datastores.mongodb.samples;
 const sqlite = datastores.sqlite;
 
 /**
@@ -13,7 +13,7 @@ const sqlite = datastores.sqlite;
  * @callback (err, count) Returns error object or integer with result count
  */
 function getSamplesCount(opts, callback) {
-  if (selectedDatastore === 'mongo') {
+  if (selectedDatastore === 'mongodb') {
     const mongoQuery = {
       siteId: opts.siteId,
       timestamp: {
@@ -94,7 +94,7 @@ function getTrafficLoadAvg(opts, callback) {
 }
 
 function getSamples(opts, callback) {
-  if (selectedDatastore === 'mongo') {
+  if (selectedDatastore === 'mongodb') {
     const mongoQuery = {
       siteId: opts.siteId,
       timestamp: {
@@ -108,7 +108,7 @@ function getSamples(opts, callback) {
 }
 
 function insertSamples(samples, callback) {
-  if (selectedDatastore === 'mongo') {
+  if (selectedDatastore === 'mongodb') {
     return MongoSamplesCollection.insertMany(samples, callback);
   }
 

@@ -49,7 +49,7 @@ function Collection(collectionName) {
   }
 
   const rtnModelObject = {
-    _type: 'mongo',
+    _type: 'mongodb',
     insertOne: function insertMany(data, callback) {
       getClient((error, client) => {
         const db = client.db(mongoDbName);

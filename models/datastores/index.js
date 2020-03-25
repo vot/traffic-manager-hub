@@ -1,6 +1,6 @@
 const config = require('../../config');
 
-const mongo = require('./mongo');
+const mongodb = require('./mongodb');
 const sqlite = require('./sqlite');
 
 function autoselect() {
@@ -8,7 +8,7 @@ function autoselect() {
   const mongoConfigExists = Boolean(config.mongoUrl && config.mongoDbName);
 
   if (mongoConfigExists) {
-    selected = 'mongo';
+    selected = 'mongodb';
   }
 
   return selected;
@@ -16,6 +16,6 @@ function autoselect() {
 
 module.exports = {
   autoselect,
-  mongo,
+  mongodb,
   sqlite,
 };

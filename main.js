@@ -7,6 +7,7 @@ const hbs = require('hbs');
 const path = require('path');
 
 const config = require('./config');
+const selectedDatastore = require('./models/datastores').autoselect();
 
 const bodyJsonParser = bodyParser.json();
 const bodyFormParser = bodyParser.urlencoded({ extended: true });
@@ -81,6 +82,7 @@ function startApp() {
 
   app.listen(config.appPort, () => {
     console.log(`Traffic Manager Hub listening on port ${config.appPort}`);
+    console.log(`Datastore selected: ${selectedDatastore}`);
   });
 
   return app;

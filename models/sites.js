@@ -1,7 +1,7 @@
 const datastores = require('./datastores');
 
 const selectedDatastore = datastores.autoselect();
-const MongoSitesCollection = datastores.mongo.sites;
+const MongoSitesCollection = datastores.mongodb.sites;
 const sqlite = datastores.sqlite;
 
 /**
@@ -11,7 +11,7 @@ const sqlite = datastores.sqlite;
  * @param {function} callback Callback with (err, data) signature
  */
 function getAllSites(callback) {
-  if (selectedDatastore === 'mongo') {
+  if (selectedDatastore === 'mongodb') {
     return MongoSitesCollection.find({}, callback);
   }
 
@@ -41,7 +41,7 @@ function getSiteByKey(key, callback) {
     return callback(null, siteData);
   }
 
-  if (selectedDatastore === 'mongo') {
+  if (selectedDatastore === 'mongodb') {
     return MongoSitesCollection.find({ siteKey: key }, returnCb);
   }
 
@@ -54,7 +54,7 @@ function getSiteByKey(key, callback) {
  * @param {function} callback Callback with (err, data) signature
  */
 function registerNewSite(siteData, callback) {
-  if (selectedDatastore === 'mongo') {
+  if (selectedDatastore === 'mongodb') {
     return MongoSitesCollection.insertOne(siteData, callback);
   }
 
@@ -67,7 +67,7 @@ function registerNewSite(siteData, callback) {
  * @param {function} callback Callback with (err, data) signature
  */
 function updateSiteSettings(siteData, callback) {
-  if (selectedDatastore === 'mongo') {
+  if (selectedDatastore === 'mongodb') {
     return MongoSitesCollection.updateOne({ siteId: siteData.siteId }, siteData, callback);
   }
 
@@ -81,7 +81,7 @@ function updateSiteSettings(siteData, callback) {
  * @param {function} callback Callback with (err, data) signature
  */
 function deleteSite(siteId, siteSecret, callback) {
-  if (selectedDatastore === 'mongo') {
+  if (selectedDatastore === 'mongodb') {
     return MongoSitesCollection.deleteOne({ siteId, siteSecret }, callback);
   }
 
