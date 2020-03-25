@@ -1,8 +1,8 @@
 const datastores = require('./datastores');
 
 const selectedDatastore = datastores.autoselect();
-
 const MongoSitesCollection = datastores.mongo.sites;
+const sqlite = datastores.sqlite;
 
 /**
  * Gets data of all sites.
@@ -15,7 +15,7 @@ function getAllSites(callback) {
     return MongoSitesCollection.find({}, callback);
   }
 
-  return callback('SQLite not ready yet');
+  return sqlite.findSites({}, callback);
 }
 
 /**
@@ -45,7 +45,7 @@ function getSiteByKey(key, callback) {
     return MongoSitesCollection.find({ siteKey: key }, returnCb);
   }
 
-  return callback('SQLite not ready yet');
+  return sqlite.findSites({ siteKey: key }, returnCb);
 }
 
 /**
@@ -58,7 +58,7 @@ function registerNewSite(siteData, callback) {
     return MongoSitesCollection.insertOne(siteData, callback);
   }
 
-  return callback('SQLite not ready yet');
+  return sqlite.insertOneSite(siteData, callback);
 }
 
 /**
@@ -71,7 +71,7 @@ function updateSiteSettings(siteData, callback) {
     return MongoSitesCollection.updateOne({ siteId: siteData.siteId }, siteData, callback);
   }
 
-  return callback('SQLite not ready yet');
+  return datastores.sqlite.updateOneSite({ siteId: siteData.siteId }, siteData, callback);
 }
 
 /**
@@ -85,7 +85,7 @@ function deleteSite(siteId, siteSecret, callback) {
     return MongoSitesCollection.deleteOne({ siteId, siteSecret }, callback);
   }
 
-  return callback('SQLite not ready yet');
+  return datastores.sqlite.deleteOneSite({ siteId, siteSecret }, callback);
 }
 
 module.exports = {

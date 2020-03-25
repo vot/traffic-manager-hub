@@ -2,6 +2,7 @@ const _ = require('lodash');
 const fs = require('fs');
 const os = require('os');
 const sqlite3 = require('sqlite3').verbose();
+const sqliteSchemaQueries = require('./util/sqliteSchemaQueries');
 
 const homedir = os.homedir();
 const datadir = `${homedir}/.traffic-manager-hub`;
@@ -16,46 +17,14 @@ try {
 }
 
 const configDb = new sqlite3.Database(`${datadir}/config.sqlite`);
-const dataDb = new sqlite3.Database(`${datadir}/data.sqlite`);
-// const dataDb = new sqlite3.Database(':memory:');
-
-const createTableQuerySites = `CREATE TABLE IF NOT EXISTS "sites" (
- "id" INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
- "displayName" TEXT,
- "visibility" TEXT,
- "key" TEXT UNIQUE,
- "secret" TEXT UNIQUE
-);`;
-
-const createTableQueryUsers = `CREATE TABLE IF NOT EXISTS "users" (
-  "id" INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-  "timestamp" INTEGER NOT NULL,
-  "email" TEXT NOT NULL,
-  "passwordHash" TEXT
-);`;
-
-const createTableQuerySamples = `CREATE TABLE IF NOT EXISTS "samples" (
-  "id" INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-  "timestamp" INTEGER NOT NULL,
-  "siteId" TEXT NOT NULL,
-  "instanceId" TEXT,
-  "url" TEXT NOT NULL,
-  "ip" TEXT NOT NULL,
-  "sessionId" TEXT,
-  "userAgent" TEXT,
-  "statusCode" INTEGER,
-  "responseSize" INTEGER,
-  "timeProcessing" INTEGER
-);`;
+const samplesDb = new sqlite3.Database(`${datadir}/samples.sqlite`);
+// const samplesDb = new sqlite3.Database(':memory:');
 
 function initDatabase() {
-  configDb.serialize(() => {
-    configDb.run(createTableQuerySites);
-    configDb.run(createTableQueryUsers);
-    dataDb.run(createTableQuerySamples);
-  });
+  configDb.run(sqliteSchemaQueries.createTableSites);
+  configDb.run(sqliteSchemaQueries.createTableUsers);
+  samplesDb.run(sqliteSchemaQueries.createTableSamples);
   // console.log('SQLite database initialised successfully.');
-  configDb.close();
 }
 
 initDatabase();
@@ -63,17 +32,84 @@ initDatabase();
 // //////////////////
 
 function insertOneSite(siteData, callback) {
-  configDb.serialize(() => {
-    const query = `INSERT INTO sites VALUES (null, ${siteData.displayName}, ${siteData.visibility}, ${siteData.key}, ${siteData.secret})`;
-    configDb.run(query);
-  });
-  configDb.close();
-  callback();
+  // console.log('siteData', siteData);
+
+  const mapped = {
+    $siteId: siteData.siteId,
+    $siteName: siteData.siteName,
+    $siteVisibility: siteData.siteVisibility,
+    $siteKey: siteData.siteKey,
+    $siteSecret: siteData.siteSecret,
+  };
+
+  const query = 'INSERT INTO sites VALUES ($siteId, $siteName, $siteVisibility, $siteKey, $siteSecret)';
+  // console.log('insert query', query, mapped);
+
+  configDb.run(query, mapped);
+
+  // configDb.close();
+  callback(null, siteData);
 }
 
+function findSites(query, callback) {
+  let sqlQuery = 'SELECT * FROM sites';
+  if (query.siteKey) sqlQuery += ` WHERE siteKey = "${query.siteKey}" `;
+  if (query.siteId) sqlQuery += ` WHERE siteId = "${query.siteId}" `;
+
+  configDb.all(sqlQuery, callback);
+}
+
+function updateOneSite(query, siteData, callback) {
+  // return callback('SQLite deleteSite not ready yet');
+  let sqlQuery = 'UPDATE sites';
+  sqlQuery += ` SET siteKey = "${siteData.siteKey}" `;
+  sqlQuery += ` AND siteName = "${siteData.siteName}" `;
+  sqlQuery += ` AND siteVisibility = "${siteData.siteVisibility}" `;
+  sqlQuery += ` WHERE siteId = "${query.siteId}" `;
+
+  configDb.run(sqlQuery);
+  return callback(null, true);
+}
+
+function deleteOneSite(query, callback) {
+  // return callback('SQLite deleteSite not ready yet');
+  let sqlQuery = 'DELETE FROM sites';
+  sqlQuery += ` WHERE siteId = "${query.siteId}" `;
+  sqlQuery += ` AND siteSecret = "${query.siteSecret}" `;
+
+  configDb.run(sqlQuery);
+  return callback(null, true);
+}
+
+
+/**
+ * SAMPLES FUNCTIONS
+ */
+
+function findSamples(query, callback) {
+  let sqlQuery = 'SELECT * FROM samples';
+  sqlQuery += ` WHERE siteId = "${query.siteId}" `;
+  if (query.tsFrom && query.tsTo) sqlQuery += `AND timestamp BETWEEN ${query.tsFrom} AND ${query.tsTo}`;
+
+  samplesDb.all(sqlQuery, callback);
+}
+
+function countSamples(query, callback) {
+  let sqlQuery = 'SELECT COUNT(*) FROM samples';
+  sqlQuery += ` WHERE siteId = "${query.siteId}" `;
+  if (query.tsFrom && query.tsTo) sqlQuery += `AND timestamp BETWEEN ${query.tsFrom} AND ${query.tsTo}`;
+
+  // samplesDb.get(sqlQuery, callback);
+  samplesDb.get(sqlQuery, (err, data) => {
+    const rtn = _.get(data, 'COUNT(*)', 0);
+    callback(err, rtn);
+  });
+}
+
+
 function insertManySamples(samples, callback) {
-  dataDb.serialize(() => {
-    const stmt = dataDb.prepare('INSERT INTO samples VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+  samplesDb.serialize(() => {
+    const stmt = samplesDb.prepare('INSERT INTO samples VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
 
     _.each(samples, (smp) => {
       // stmt.run(null, `Nice Display Name Ipsum`, 'Public', `asdf`, `qwer`);
@@ -93,34 +129,19 @@ function insertManySamples(samples, callback) {
       );
     });
     stmt.finalize();
-
-    console.log('initialised!');
-    callback();
   });
-  dataDb.close();
-}
 
-
-function findSites(query, callback) {
-  configDb.each('SELECT id AS id, displayName FROM sites', (err, row) => {
-    console.log(`${row.id}: ${row.displayName}`);
-    callback();
-  });
-}
-
-function findSamples(query, callback) {
-  dataDb.each('SELECT id AS id, displayName FROM samples', (err, row) => {
-    console.log(`${row.id}: ${row.displayName}`);
-    callback();
-  });
+  // samplesDb.close();
+  callback(null, true);
 }
 
 module.exports = {
   findSites,
   insertOneSite,
-  // updateOneSite,
-  // deleteOneSite,
+  updateOneSite,
+  deleteOneSite,
+
   findSamples,
+  countSamples,
   insertManySamples,
-  // countSamples,
 };

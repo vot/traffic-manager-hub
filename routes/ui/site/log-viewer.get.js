@@ -16,6 +16,7 @@ module.exports = (req, res) => {
   if (qFrame !== 'all') {
     const sampleFromTimestamp = mapRelativeTime(qFrame);
     query.tsFrom = sampleFromTimestamp;
+    query.tsTo = mapRelativeTime();
   }
 
 

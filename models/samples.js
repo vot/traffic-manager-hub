@@ -1,10 +1,10 @@
 const _ = require('lodash');
-
 const datastores = require('./datastores');
 const mapRelativeTime = require('../lib/mapRelativeTime');
 
 const selectedDatastore = datastores.autoselect();
 const MongoSamplesCollection = datastores.mongo.samples;
+const sqlite = datastores.sqlite;
 
 /**
  * Count samples for a given site
@@ -30,7 +30,7 @@ function getSamplesCount(opts, callback) {
     return MongoSamplesCollection.count(mongoQuery, callback);
   }
 
-  return callback('SQLite not ready yet');
+  return datastores.sqlite.countSamples(opts, callback);
 }
 
 /**
@@ -104,7 +104,7 @@ function getSamples(opts, callback) {
     return MongoSamplesCollection.find(mongoQuery, callback);
   }
 
-  return callback('SQLite not ready yet');
+  return sqlite.findSamples({ siteId: opts.siteId, }, callback);
 }
 
 function insertSamples(samples, callback) {
@@ -112,7 +112,7 @@ function insertSamples(samples, callback) {
     return MongoSamplesCollection.insertMany(samples, callback);
   }
 
-  return callback('SQLite not ready yet');
+  return sqlite.insertManySamples(samples, callback);
 }
 
 module.exports = {

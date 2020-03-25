@@ -36,7 +36,7 @@ module.exports = (req, res) => {
 
     // if no site with that key found then proceed with creating one
     // const newSiteData = _.merge({}, storedData, { siteName, siteKey, siteVisibility });
-    const newSiteData = { siteName, siteKey: siteKeyNew, siteVisibility };
+    const newSiteData = { siteId, siteName, siteKey: siteKeyNew, siteVisibility };
     // console.log('update newSiteData', newSiteData);
 
     return SitesModel.updateSiteSettings(newSiteData, (updateErr, updateData) => {

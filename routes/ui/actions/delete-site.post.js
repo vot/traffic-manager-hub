@@ -19,7 +19,7 @@ module.exports = (req, res) => {
 
     return SitesModel.deleteSite(siteId, siteSecret, (deleteErr, deleteData) => {
       if (deleteErr || !deleteData) {
-        return res.render('add-site/add-site-error', { error: deleteErr || 'deleteData empty' });
+        return res.render('error', { error: deleteErr || 'deleteData empty' });
       }
 
       console.log(`siteKey "${siteKey}" deleted`);
