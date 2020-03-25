@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.0.4
+- Add support for SQLite (slightly buggy)
+
+
 ## v0.0.3
 - Use "now-" prefix for relative time
 - Improve model abstraction

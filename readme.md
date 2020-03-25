@@ -35,11 +35,12 @@ with `tmhub` command in your terminal.
 
 This service uses these env vars for configuration:
 
-* `MONGO_URL` (required)
-* `MONGO_DBNAME` (required)
+* `MONGO_URL` (optional)
+* `MONGO_DBNAME` (optional)
 * `PORT` (default: `4000`)
 * `BASE_URL` (default: `http://localhost:4000`)
 
+If MONGO_URL and MONGO_DBNAME are not specified a local SQLite will be used as fallback.
 
 **Example**
 
